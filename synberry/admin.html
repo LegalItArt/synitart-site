@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SynBerry 등록 현황판</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: 다크 우선 관제판. 위에서 아래로 — 목표 대비 진행 → 검증 게이트 → 분포 → 추이 */
+:root{
+  --bg:#120C0D; --panel:#1E1517; --ink:#FFF4F4; --muted:#D9C3C5; --line:#4A3438;
+  --berry:#FF5C70; --leaf:#6BD493; --amber:#FFC24B; --track:#3A2A2D; --focus:#8AB4F8;
+  --f-display:"Black Han Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#FFF9F7; --panel:#FFFFFF; --ink:#1D1314; --muted:#4F4042; --line:#D9C3C5;
+  --berry:#B5122B; --leaf:#1E6B3A; --amber:#8A5A00; --track:#F1E2E3; --focus:#0B57D0; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#FFF9F7; --panel:#FFFFFF; --ink:#1D1314; --muted:#4F4042; --line:#D9C3C5;
+  --berry:#B5122B; --leaf:#1E6B3A; --amber:#8A5A00; --track:#F1E2E3; --focus:#0B57D0; color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;padding-inline:20px;padding-block:0 40px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:28px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2{font-family:var(--f-display);font-weight:400;margin:0;line-height:1.2}
+h1{font-size:clamp(1.6rem,1.2rem + 1.5vw,2.3rem)} h2{font-size:1.35rem}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;padding-block:20px 16px;border-bottom:2px solid var(--ink)}
+.meta{color:var(--muted);font-size:.95rem}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.controls input{font:inherit;font-size:1rem;padding:10px 12px;border-radius:8px;border:2px solid var(--line);background:var(--panel);color:var(--ink);width:min(260px,100%)}
+button{font:inherit;font-weight:700;padding:10px 16px;border-radius:8px;border:2px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--ink)}
+.banner{border:2px dashed var(--amber);color:var(--amber);border-radius:10px;padding:12px 16px;font-weight:700}
+.banner.err{border-color:var(--berry);color:var(--berry)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;min-width:0;align-content:start}
+.kpi .lab{font-weight:700;font-size:1rem;color:var(--muted)}
+.kpi .val{font-family:var(--f-mono);font-size:2.6rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .val small{font-size:1rem;color:var(--muted);font-weight:500}
+.bar{height:14px;border-radius:7px;background:var(--track);overflow:hidden;position:relative}
+.bar i{display:block;height:100%;background:var(--berry);border-radius:7px}
+.bar .pace{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--ink)}
+.chip{justify-self:start;font-weight:700;font-size:.85rem;padding:3px 10px;border-radius:999px;border:2px solid currentColor}
+.ok{color:var(--leaf)} .warn{color:var(--amber)} .bad{color:var(--berry)}
+.note{font-size:.88rem;color:var(--muted)}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gate{border-left:6px solid var(--line)}
+.gate.ok{border-left-color:var(--leaf)} .gate.warn{border-left-color:var(--amber)} .gate.bad{border-left-color:var(--berry)}
+.gate .t{font-weight:700;color:var(--ink)} .gate .d{color:var(--muted);font-size:.95rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hbars{display:grid;gap:10px}
+.hb{display:grid;grid-template-columns:8.5rem 1fr 3.5rem;gap:10px;align-items:center}
+.hb span:first-child{font-weight:500}
+.hb .n{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.hb .bar{height:18px}
+.hb .bar i.alt{background:var(--leaf)}
+.big2{display:flex;flex-wrap:wrap;gap:24px}
+.big2 div{display:grid}
+.big2 b{font-family:var(--f-mono);font-size:1.9rem;font-variant-numeric:tabular-nums}
+.chart{overflow-x:auto}
+svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.gates,.grid2{grid-template-columns:1fr}}
+@media (max-width:460px){.kpis{grid-template-columns:1fr}.hb{grid-template-columns:6.5rem 1fr 3rem}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div style="display:grid;gap:4px;min-width:0">
+      <h1>SynBerry 사전 등록 현황</h1>
+      <span class="meta" id="updated">불러오는 중…</span>
+    </div>
+    <div class="controls" id="ctl">
+      <label for="key" class="meta">관리자 키</label>
+      <input id="key" type="password" autocomplete="off" placeholder="스크립트 속성의 ADMIN_KEY">
+      <button type="button" id="load">불러오기</button>
+      <button type="button" class="ghost" id="refresh">새로고침</button>
+    </div>
+  </header>
+
+  <div class="banner" id="banner" hidden></div>
+
+  <section class="kpis" aria-label="목표 대비 진행">
+    <div class="card kpi" id="k-total"></div>
+    <div class="card kpi" id="k-price"></div>
+    <div class="card kpi" id="k-taster"></div>
+    <div class="card kpi" id="k-farm"></div>
+  </section>
+  <p class="note">세로 검은 선은 오늘 날짜 기준으로 지금쯤 도달해야 할 지점입니다 (기간 2026.10.15~12.31).</p>
+
+  <section aria-labelledby="h-gate" style="display:grid;gap:12px">
+    <h2 id="h-gate">검증 게이트</h2>
+    <div class="gates" id="gates"></div>
+  </section>
+
+  <section class="grid2">
+    <div class="card"><h2>등록 유형</h2><div class="hbars" id="byType"></div></div>
+    <div class="card"><h2>배송 권역</h2><div class="hbars" id="byZone"></div></div>
+  </section>
+
+  <section class="grid2">
+    <div class="card">
+      <h2>1kg 가격 선호</h2>
+      <div class="hbars" id="price"></div>
+      <p class="note" id="priceNote"></p>
+    </div>
+    <div class="card">
+      <h2>협력 농가 · 단체 · 체험</h2>
+      <div class="big2" id="side"></div>
+      <div class="hbars" id="farm"></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-daily">
+    <h2 id="h-daily">일별 등록 (최근 30일)</h2>
+    <div class="chart" id="daily"></div>
+  </section>
+</div>
+
+<script>
+/* GitHub Pages용: google.script.run 을 Apps Script 웹 앱(doPost) 호출로 대체 */
+(function(){
+  var EXEC = "https://script.google.com/macros/s/AKfycbxR3iRtfJbjJ2vlYViPKpsKm_nVTqVA4sZReIqip7gs1ZGxeb2xFNVJZm-jLhm1J9U/exec";
+  function call(fn, arg, ok, fail){
+    fetch(EXEC, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify({fn:fn, arg:arg})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if (j && j.ok) ok && ok(j.result); else fail && fail(new Error((j && j.error) || "처리하지 못했습니다.")); })
+      .catch(function(){ fail && fail(new Error("전송하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 눌러 주세요.")); });
+  }
+  function runner(ok, fail){
+    return {
+      withSuccessHandler: function(f){ return runner(f, fail); },
+      withFailureHandler: function(f){ return runner(ok, f); },
+      submit:   function(d){ call("submit", d, ok, fail); },
+      getStats: function(k){ call("getStats", k, ok, fail); }
+    };
+  }
+  window.google = {script:{run: runner(null, null)}};
+})();
+</script>
+<script>
+(function(){
+  var LIVE = !!(window.google && google.script && google.script.run);  // Apps Script 웹 앱 안에서만 실제 집계
+  var START = new Date("2026-10-15T00:00:00+09:00"), END = new Date("2026-12-31T23:59:59+09:00");
+  var T = {total:300, price:150, taster:30, farm:3};
+
+  function sample(){
+    var daily = {}, d = new Date(), n = [0,1,0,2,3,1,4,2,5,3,6,4,3,8,5,7,6,9,4,7,10,6,8,5,9,11,7,8,12,9];
+    for (var i = 29; i >= 0; i--){ var x = new Date(d - i*864e5); daily[x.toISOString().slice(0,10)] = n[29-i]; }
+    return {ok:true, sample:true, updatedAt:new Date().toISOString(), total:182,
+      byType:{"가정 정기배송":141,"딸기 따기 체험":26,"학교·기관 단체":11,"협력 농가":4},
+      byZone:{"20분권":88,"40분권":52,"60분권":31,"기타":7},
+      price:{"12000":24,"18000":61,"22000":19,"모름":13}, taster:47, marketing:120,
+      farms:{count:4, deliverable:2, partial:1, hard:1}, org:{count:11, people:236}, exp:{count:26, people:97}, daily:daily};
+  }
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+  function pace(){ var p = (Date.now() - START) / (END - START); return Math.max(0, Math.min(1, p)); }
+  function status(v, t){
+    var r = v / t, p = pace();
+    if (r >= 1) return ["ok","달성"];
+    if (p === 0 || r >= p) return ["ok","순조"];
+    if (r >= p * 0.7) return ["warn","조금 늦음"];
+    return ["bad","뒤처짐"];
+  }
+  function kpi(id, lab, v, t, unit){
+    var s = status(v, t), pct = Math.min(100, Math.round(v / t * 100));
+    $(id).innerHTML = '<span class="lab">' + lab + '</span>' +
+      '<span class="val">' + v.toLocaleString() + ' <small>/ ' + t + unit + '</small></span>' +
+      '<div class="bar" role="img" aria-label="목표의 ' + pct + '%"><i style="width:' + pct + '%"></i><span class="pace" style="left:calc(' + (pace()*100) + '% - 1px)"></span></div>' +
+      '<span class="chip ' + s[0] + '">' + s[1] + ' · ' + pct + '%</span>';
+  }
+  function hbars(id, obj, alt){
+    var keys = Object.keys(obj), max = Math.max.apply(null, keys.map(function(k){ return obj[k]; }).concat([1]));
+    $(id).innerHTML = keys.map(function(k){
+      return '<div class="hb"><span>' + esc(k) + '</span><div class="bar"><i class="' + (alt ? "alt" : "") + '" style="width:' + (obj[k] / max * 100) + '%"></i></div><span class="n">' + obj[k] + '</span></div>';
+    }).join("");
+  }
+  function line(daily){
+    var keys = Object.keys(daily).sort().slice(-30), vals = keys.map(function(k){ return daily[k]; });
+    var W = 1100, H = 220, P = {l:36, r:34, t:16, b:30}, max = Math.max.apply(null, vals.concat([4]));
+    var x = function(i){ return P.l + i * (W - P.l - P.r) / Math.max(1, vals.length - 1); };
+    var y = function(v){ return H - P.b - v / max * (H - P.t - P.b); };
+    var pts = vals.map(function(v, i){ return x(i) + "," + y(v); }).join(" ");
+    var grid = [0, Math.round(max/2), max].map(function(g){
+      return '<line x1="' + P.l + '" x2="' + (W-P.r) + '" y1="' + y(g) + '" y2="' + y(g) + '" stroke="var(--line)" stroke-width="1"/><text x="' + (P.l-8) + '" y="' + (y(g)+4) + '" text-anchor="end">' + g + '</text>'; }).join("");
+    var lab = keys.map(function(k, i){ return (i % 5 === 0 || i === keys.length-1) ? '<text x="' + x(i) + '" y="' + (H-8) + '" text-anchor="middle">' + k.slice(5).replace("-", ".") + '</text>' : ""; }).join("");
+    var lastI = vals.length - 1;
+    $("daily").innerHTML = vals.length ? '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" style="min-width:560px" role="img" aria-label="최근 30일 일별 등록 수">' + grid +
+      '<polygon points="' + P.l + ',' + (H-P.b) + ' ' + pts + ' ' + x(lastI) + ',' + (H-P.b) + '" fill="var(--berry)" fill-opacity=".18"/>' +
+      '<polyline points="' + pts + '" fill="none" stroke="var(--berry)" stroke-width="3"/>' +
+      '<circle cx="' + x(lastI) + '" cy="' + y(vals[lastI]) + '" r="6" fill="var(--berry)"/>' + lab + '</svg>'
+      : '<p class="note">아직 등록이 없습니다.</p>';
+  }
+  function render(s){
+    var priceN = s.price["12000"] + s.price["18000"] + s.price["22000"] + s.price["모름"];
+    var priced = s.price["12000"] + s.price["18000"] + s.price["22000"];
+    var accept = priced ? Math.round((s.price["18000"] + s.price["22000"]) / priced * 100) : 0;
+    var avg = priced ? Math.round((12000*s.price["12000"] + 18000*s.price["18000"] + 22000*s.price["22000"]) / priced) : 0;
+    kpi("k-total", "전체 등록", s.total, T.total, "명");
+    kpi("k-price", "가격 선호 응답 (H3)", priceN, T.price, "건");
+    kpi("k-taster", "시식 체험단 희망 (H2)", s.taster, T.taster, "가구");
+    kpi("k-farm", "협력 농가 · 시흥 인도 가능 (H1)", s.farms.deliverable, T.farm, "곳");
+    var g1 = s.farms.deliverable >= 2 ? "ok" : (s.farms.deliverable + s.farms.partial >= 2 ? "warn" : "bad");
+    var g2 = s.taster >= 30 ? "ok" : (s.taster >= 15 ? "warn" : "bad");
+    var g3 = priceN >= 150 && accept >= 50 ? "ok" : (accept >= 50 ? "warn" : "bad");
+    var G = [
+      [g1, "G1 · 협력 농가 2곳 (10.31)", "인도 가능 " + s.farms.deliverable + "곳, 요일별 가능 " + s.farms.partial + "곳"],
+      [g2, "H2 · 시식 체험단 30가구 (12월)", "희망 " + s.taster + "가구 — 30가구 선정 가능 여부"],
+      [g3, "H3 · 18,000원 이상 수용", "가격 응답 중 " + accept + "% 수용 (기준 50%), 응답 " + priceN + "건"]];
+    $("gates").innerHTML = G.map(function(g){ return '<div class="card gate ' + g[0] + '"><span class="t">' + g[1] + '</span><span class="d">' + g[2] + '</span><span class="chip ' + g[0] + '">' + ({ok:"통과",warn:"확인 필요",bad:"미달"})[g[0]] + '</span></div>'; }).join("");
+    hbars("byType", s.byType); hbars("byZone", s.byZone);
+    hbars("price", {"12,000원":s.price["12000"], "18,000원":s.price["18000"], "22,000원":s.price["22000"], "모르겠다":s.price["모름"]});
+    $("priceNote").textContent = priced ? "가격을 고른 응답의 가중 평균 " + avg.toLocaleString() + "원/kg · 18,000원 이상 수용 " + accept + "%" : "아직 가격 응답이 없습니다.";
+    $("side").innerHTML = '<div><span class="note">단체 문의</span><b>' + s.org.count + '곳</b><span class="note">예상 ' + s.org.people + '명</span></div>' +
+      '<div><span class="note">체험 대기</span><b>' + s.exp.count + '팀</b><span class="note">' + s.exp.people + '명</span></div>' +
+      '<div><span class="note">문자 수신 동의</span><b>' + s.marketing + '명</b></div>';
+    hbars("farm", {"인도 가능":s.farms.deliverable, "요일별 가능":s.farms.partial, "수거 필요":s.farms.hard}, true);
+    line(s.daily || {});
+    var when = new Date(s.updatedAt).toLocaleString("ko-KR", {dateStyle:"medium", timeStyle:"short"});
+    $("updated").textContent = (s.sample ? "예시 데이터 · " : "실시간 집계 · ") + when + " 기준";
+  }
+  function banner(msg, err){ var b = $("banner"); b.hidden = !msg; b.textContent = msg || ""; b.className = "banner" + (err ? " err" : ""); }
+
+  function load(){
+    var key = $("key").value.trim();
+    if (!LIVE){ banner("예시 데이터입니다. 실제 숫자는 웹 앱 주소 뒤에 ?page=admin 을 붙여 열면 볼 수 있습니다."); render(sample()); return; }
+    if (!key){ banner("관리자 키를 입력하고 불러오기를 누르세요."); render(sample()); return; }
+    try { localStorage.setItem("sb-admin-key", key); } catch(e){}
+    $("updated").textContent = "불러오는 중…";
+    google.script.run
+      .withSuccessHandler(function(s){
+        if (!s || !s.ok){ banner(s && s.reason === "key" ? "관리자 키가 맞지 않습니다. 스크립트 속성의 ADMIN_KEY를 확인하세요." : "집계를 불러오지 못했습니다.", true); return; }
+        banner(""); render(s);
+      })
+      .withFailureHandler(function(e){ banner("집계를 불러오지 못했습니다: " + ((e && e.message) || "알 수 없는 오류"), true); })
+      .getStats(key);
+  }
+  try { var k = localStorage.getItem("sb-admin-key"); if (k) $("key").value = k; } catch(e){}
+  if (!LIVE) $("ctl").hidden = true;
+  $("load").addEventListener("click", load);
+  $("refresh").addEventListener("click", load);
+  load();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SynBerry 사전 등록</title>
+<meta name="description" content="수도권 1시간 안의 딸기 산지 SynBerry — 정기배송·체험·단체 프로그램·협력 농가 사전 등록">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: 한 줄 세로 흐름. 히어로의 '수확 시각 라벨' 하나만 굵게, 나머지는 조용한 리스트와 폼 */
+:root{
+  --bg:#FFF9F7; --surface:#FFFFFF; --ink:#1D1314; --muted:#5A4A4C; --line:#E6D3D3;
+  --berry:#B5122B; --berry-ink:#FFFFFF; --leaf:#1E6B3A; --focus:#0B57D0; --tint:#FBE9EA;
+  --f-display:"Black Han Sans","Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --s-1:clamp(1.15rem,1.05rem + .4vw,1.3rem); --s-2:clamp(1.45rem,1.2rem + 1vw,1.9rem);
+  --s-3:clamp(2rem,1.4rem + 2.6vw,3.4rem);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#150E0F; --surface:#21171A; --ink:#FBEFEF; --muted:#D5BFC1; --line:#4A3438;
+  --berry:#FF5C70; --berry-ink:#1A0B0D; --leaf:#6BD493; --focus:#8AB4F8; --tint:#2E1A1E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#150E0F; --surface:#21171A; --ink:#FBEFEF; --muted:#D5BFC1; --line:#4A3438;
+  --berry:#FF5C70; --berry-ink:#1A0B0D; --leaf:#6BD493; --focus:#8AB4F8; --tint:#2E1A1E; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:19px;line-height:1.7;
+  padding-inline:20px;padding-block:0 48px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:72px}
+a{color:var(--berry)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+h1,h2{font-family:var(--f-display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:var(--s-3)} h2{font-size:var(--s-2)}
+p{margin:0;max-width:62ch}
+.eyebrow{font-weight:700;letter-spacing:.06em;color:var(--leaf);font-size:.95rem}
+header.top{display:flex;justify-content:space-between;align-items:center;padding-block:20px;border-bottom:2px solid var(--ink)}
+.logo{font-family:var(--f-display);font-size:1.6rem;letter-spacing:.01em}
+.logo b{color:var(--berry);font-weight:400}
+.status{font-size:.9rem;font-weight:700;border:2px solid var(--ink);padding:4px 12px;border-radius:999px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.2fr .9fr;gap:40px;align-items:center}
+.hero>div{min-width:0;display:grid;gap:20px}
+.lead{font-size:var(--s-1);color:var(--muted)}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--berry);color:var(--berry-ink);font-weight:700;
+  font-size:1.15rem;padding:16px 26px;border-radius:12px;text-decoration:none;justify-self:start;border:none;cursor:pointer}
+.cta:hover{filter:brightness(1.08)}
+.label{background:var(--surface);border:3px solid var(--ink);border-radius:6px;padding:22px;font-family:var(--f-mono);
+  display:grid;gap:14px;box-shadow:8px 8px 0 var(--berry);transform:rotate(-1.2deg)}
+.label .row{display:flex;justify-content:space-between;gap:12px;border-bottom:1.5px dashed var(--line);padding-bottom:10px;font-size:1.05rem}
+.label .row span:first-child{color:var(--muted);font-family:var(--f-body)}
+.label .big{font-size:2.4rem;font-weight:600;color:var(--berry);line-height:1}
+.label .tag{font-family:var(--f-body);font-size:.85rem;color:var(--muted)}
+@media (prefers-reduced-motion: no-preference){.label{transition:transform .3s}.label:hover{transform:rotate(0)}}
+
+/* promises */
+.promises{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:2px solid var(--ink);padding-top:28px}
+.promises article{display:grid;gap:8px;align-content:start;min-width:0}
+.promises h3{margin:0;font-size:1.25rem}
+.promises .num{font-family:var(--f-mono);color:var(--berry);font-weight:600;font-size:1.6rem}
+.promises p{color:var(--muted);font-size:1.02rem}
+
+/* zones */
+.zones{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center}
+.rings{position:relative;width:min(300px,70vw);aspect-ratio:1;max-width:100%}
+.rings div{position:absolute;border-radius:50%;border:3px solid var(--berry);display:grid;place-items:start center;
+  font-family:var(--f-mono);font-weight:600;font-size:.9rem;padding-top:6px}
+.r60{inset:0;background:var(--tint)} .r40{inset:17%;background:var(--bg)} .r20{inset:34%;background:var(--tint)}
+.rings .core{inset:46%;background:var(--berry);border-color:var(--berry)}
+.zlist{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.zlist li{display:grid;grid-template-columns:5.5rem 1fr;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.zlist b{font-family:var(--f-mono);color:var(--berry)}
+
+/* form */
+.signup{background:var(--surface);border:3px solid var(--ink);border-radius:14px;padding:clamp(20px,4vw,40px);display:grid;gap:26px}
+.tabs{display:flex;flex-wrap:wrap;gap:10px}
+.tabs button{font:inherit;font-weight:700;font-size:1.02rem;padding:12px 18px;border-radius:10px;border:2px solid var(--ink);
+  background:var(--bg);color:var(--ink);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+fieldset{border:none;margin:0;padding:0;display:grid;gap:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:grid;gap:6px;min-width:0}
+label,.legend{font-weight:700;font-size:1rem}
+.hint{font-size:.9rem;color:var(--muted)}
+input[type=text],input[type=tel],input[type=email],input[type=number],select,textarea{
+  font:inherit;font-size:1.05rem;padding:12px 14px;border:2px solid var(--muted);border-radius:10px;background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:90px;resize:vertical}
+.choices{display:flex;flex-wrap:wrap;gap:10px}
+.choices label{display:flex;align-items:center;gap:8px;border:2px solid var(--line);padding:10px 14px;border-radius:10px;font-weight:500;cursor:pointer}
+.choices input{width:22px;height:22px;accent-color:var(--berry)}
+.price b{font-family:var(--f-mono)}
+.consent{border:2px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;font-size:.95rem}
+.consent label{display:flex;gap:10px;align-items:flex-start;font-weight:700}
+.consent input{width:22px;height:22px;flex:none;margin-top:3px;accent-color:var(--berry)}
+.consent dl{display:grid;grid-template-columns:7rem 1fr;gap:4px 12px;margin:0;color:var(--muted)}
+.consent dt{font-weight:700;color:var(--ink)}
+.consent dd{margin:0}
+.error{color:var(--berry);font-weight:700;min-height:1.5em}
+.done{border:3px solid var(--leaf);border-radius:12px;padding:22px;display:grid;gap:8px}
+.done h3{margin:0;color:var(--leaf);font-size:1.3rem}
+.nopay{font-weight:700;background:var(--tint);border-radius:10px;padding:12px 16px}
+
+/* faq */
+details{border-bottom:1px solid var(--line);padding-block:14px}
+summary{font-weight:700;cursor:pointer;font-size:1.08rem}
+details p{margin-top:10px;color:var(--muted)}
+footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.95rem;color:var(--muted)}
+.copy{font:inherit;font-weight:700;border:2px solid var(--ink);background:var(--bg);color:var(--ink);border-radius:8px;padding:4px 10px;cursor:pointer;margin-left:6px}
+
+@media (max-width:760px){
+  .hero,.zones{grid-template-columns:1fr}
+  .promises{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  .label{transform:none}
+  .rings{justify-self:center}
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">Syn<b>Berry</b></div>
+    <span class="status">개장 준비 중 · 사전 등록</span>
+  </header>
+
+  <section class="hero" aria-labelledby="h-hero">
+    <div>
+      <span class="eyebrow">경기 시흥 · 수도권 1시간 안의 딸기 산지</span>
+      <h1 id="h-hero">오늘 아침에 딴 딸기,<br>오늘 저녁 식탁에.</h1>
+      <p class="lead">산지직송 딸기는 보통 2~4일 뒤에 도착합니다. SynBerry는 시흥에서 수확한 딸기를 그날 안에 전해 드리려고 준비하고 있습니다. 먼저 등록해 주시면 시식 체험단과 첫 배송 소식을 가장 먼저 알려 드립니다.</p>
+      <a class="cta" href="#signup">사전 등록하기 →</a>
+    </div>
+    <div class="label" aria-label="SynBerry 수확 라벨 예시">
+      <div class="tag">수확 라벨 예시 · 실제 라벨은 농장별로 표기됩니다</div>
+      <div class="row"><span>수확</span><span>오전 05:42</span></div>
+      <div class="row"><span>예냉 (품온 10℃ 이하)</span><span>08:51</span></div>
+      <div class="row"><span>출발</span><span>13:00</span></div>
+      <div><span class="tag">수확부터 문 앞까지 목표</span><div class="big">8시간 이내</div></div>
+    </div>
+  </section>
+
+  <section class="promises" aria-label="준비하고 있는 것">
+    <article><span class="num">08:30</span><h3>당일 인도</h3><p>협력 농가가 아침 8시 30분까지 시흥으로 딸기를 가져오는 방식으로 운영할 계획입니다. 농장별로 따로 선별하고, 라벨에 산지와 수확 시각을 적습니다.</p></article>
+    <article><span class="num">13℃</span><h3>폭염에 강한 모종</h3><p>여름밤 기온을 13℃로 맞춘 육묘 시설에서 꽃눈이 제때 생기도록 모종을 키울 계획입니다. 무더위로 첫 수확이 늦어지는 문제를 줄이기 위해서입니다.</p></article>
+    <article><span class="num">2028</span><h3>체험 농장</h3><p>온실 안에서 딸기를 직접 따는 체험과 학교·기관 단체 프로그램을 2028년 시즌에 열 계획입니다.</p></article>
+  </section>
+
+  <section class="zones" aria-labelledby="h-zone">
+    <div class="rings" aria-hidden="true">
+      <div class="r60">60분</div><div class="r40">40분</div><div class="r20">20분</div><div class="core"></div>
+    </div>
+    <div style="display:grid;gap:18px;min-width:0">
+      <h2 id="h-zone">시흥에서 얼마나 걸리나요</h2>
+      <ul class="zlist">
+        <li><b>20분권</b><span>시흥 · 안산 · 광명 — 직거래와 농장 픽업</span></li>
+        <li><b>40분권</b><span>부천 · 안양 · 군포 · 의왕 · 인천 동부 — 가정 배송, 카페·베이커리</span></li>
+        <li><b>60분권</b><span>서울 서남권 · 수원 · 화성 북부 — 프리미엄 당일 배송</span></li>
+      </ul>
+      <p class="hint">배송 권역과 요일은 시범 운영 결과에 따라 확정합니다.</p>
+    </div>
+  </section>
+
+  <section id="signup" class="signup" aria-labelledby="h-signup">
+    <div style="display:grid;gap:10px">
+      <h2 id="h-signup">사전 등록</h2>
+      <p class="nopay">지금은 결제나 예약금을 받지 않습니다. 등록은 무료이며 언제든 취소할 수 있습니다.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="등록 종류">
+      <button type="button" role="tab" id="t-home" aria-selected="true" data-type="home">가정 정기배송</button>
+      <button type="button" role="tab" id="t-exp" aria-selected="false" data-type="exp">딸기 따기 체험</button>
+      <button type="button" role="tab" id="t-org" aria-selected="false" data-type="org">학교·기관 단체</button>
+      <button type="button" role="tab" id="t-farm" aria-selected="false" data-type="farm">협력 농가</button>
+    </div>
+
+    <form id="f" novalidate>
+      <fieldset>
+        <div class="grid2">
+          <div class="field"><label for="name">이름 또는 닉네임</label><input id="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="phone">휴대폰 번호</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></div>
+        </div>
+
+        <div class="field" data-for="home exp org">
+          <label for="area">사는 곳(또는 기관 소재지)</label>
+          <select id="area">
+            <option value="">선택해 주세요</option>
+            <optgroup label="20분권"><option>시흥</option><option>안산</option><option>광명</option></optgroup>
+            <optgroup label="40분권"><option>부천</option><option>안양</option><option>군포</option><option>의왕</option><option>인천</option></optgroup>
+            <optgroup label="60분권"><option>서울 서남권</option><option>수원</option><option>화성</option></optgroup>
+            <option>그 밖의 지역</option>
+          </select>
+        </div>
+
+        <!-- 가정 -->
+        <div class="field" data-for="home">
+          <span class="legend" id="lg-freq">받고 싶은 횟수</span>
+          <div class="choices" role="radiogroup" aria-labelledby="lg-freq">
+            <label><input type="radio" name="freq" id="fq1" value="주 1회">주 1회</label>
+            <label><input type="radio" name="freq" id="fq2" value="2주 1회">2주 1회</label>
+            <label><input type="radio" name="freq" id="fq3" value="월 1회">월 1회</label>
+            <label><input type="radio" name="freq" id="fq4" value="그때그때">그때그때</label>
+          </div>
+        </div>
+        <div class="field price" data-for="home">
+          <span class="legend" id="lg-price">당일 수확 딸기 1kg에 적당하다고 느끼는 가격</span>
+          <span class="hint">가격을 정하는 데 참고합니다. 이 가격으로 판매를 약속하는 것은 아닙니다.</span>
+          <div class="choices" role="radiogroup" aria-labelledby="lg-price">
+            <label><input type="radio" name="price" id="pr1" value="12000"><b>12,000원</b></label>
+            <label><input type="radio" name="price" id="pr2" value="18000"><b>18,000원</b></label>
+            <label><input type="radio" name="price" id="pr3" value="22000"><b>22,000원</b></label>
+            <label><input type="radio" name="price" id="pr4" value="모름">잘 모르겠다</label>
+          </div>
+        </div>
+        <div class="field" data-for="home">
+          <label style="display:flex;gap:10px;align-items:center;font-weight:500"><input type="checkbox" id="taster" style="width:22px;height:22px;accent-color:var(--berry)"> 12월 시식 체험단에 참여하고 싶습니다 (무료, 30가구 선정)</label>
+        </div>
+
+        <!-- 체험 -->
+        <div class="grid2" data-for="exp">
+          <div class="field"><label for="expn">예상 인원</label><input id="expn" type="number" min="1" max="20" inputmode="numeric" placeholder="예: 4"></div>
+          <div class="field"><label for="expw">선호 요일</label><select id="expw"><option value="">선택</option><option>평일</option><option>토요일</option><option>일요일</option><option>상관없음</option></select></div>
+        </div>
+
+        <!-- 기관 -->
+        <div class="grid2" data-for="org">
+          <div class="field"><label for="orgt">기관 유형</label><select id="orgt"><option value="">선택</option><option>어린이집·유치원</option><option>초·중·고</option><option>특수학교</option><option>복지기관</option><option>기업·단체</option><option>기타</option></select></div>
+          <div class="field"><label for="orgn">예상 인원</label><input id="orgn" type="number" min="1" inputmode="numeric" placeholder="예: 25"></div>
+        </div>
+        <div class="field" data-for="org"><label for="orgi">관심 프로그램</label><select id="orgi"><option value="">선택</option><option>딸기 따기 체험</option><option>스마트팜 교육</option><option>체험 + 교육</option></select></div>
+
+        <!-- 농가 -->
+        <div class="grid2" data-for="farm">
+          <div class="field"><label for="farml">농장 소재지 (시·군)</label><input id="farml" type="text" placeholder="예: 화성시"></div>
+          <div class="field"><label for="farma">딸기 재배 면적</label><input id="farma" type="text" placeholder="예: 1,650㎡ (500평)"></div>
+        </div>
+        <div class="field" data-for="farm">
+          <span class="legend" id="lg-deliv">아침 8시 30분까지 시흥으로 직접 가져오실 수 있나요?</span>
+          <div class="choices" role="radiogroup" aria-labelledby="lg-deliv">
+            <label><input type="radio" name="deliv" id="dv1" value="가능">가능</label>
+            <label><input type="radio" name="deliv" id="dv2" value="일부 가능">요일에 따라 가능</label>
+            <label><input type="radio" name="deliv" id="dv3" value="어려움">어려움 (수거 필요)</label>
+          </div>
+        </div>
+
+        <div class="field"><label for="memo">하고 싶은 말 <span class="hint">(선택)</span></label><textarea id="memo"></textarea></div>
+
+        <div class="consent">
+          <label for="agree"><input type="checkbox" id="agree" required> 개인정보 수집·이용에 동의합니다 (필수)</label>
+          <dl>
+            <dt>수집 항목</dt><dd>이름 또는 닉네임, 휴대폰 번호, 지역, 등록 시 입력한 응답</dd>
+            <dt>이용 목적</dt><dd>개장·시식 체험단 안내, 수요 조사</dd>
+            <dt>보유 기간</dt><dd>2027년 12월 31일까지. 취소를 요청하시면 즉시 삭제합니다</dd>
+            <dt>거부할 권리</dt><dd>동의하지 않으셔도 됩니다. 다만 등록은 할 수 없습니다</dd>
+          </dl>
+          <label for="mkt" style="font-weight:500"><input type="checkbox" id="mkt"> 문자로 소식을 받겠습니다 (선택)</label>
+        </div>
+
+        <p class="error" id="err" role="alert" aria-live="assertive"></p>
+        <button class="cta" type="submit" id="submit">무료로 등록하기</button>
+      </fieldset>
+    </form>
+    <div class="done" id="done" hidden role="status">
+      <h3>등록되었습니다</h3>
+      <p id="doneMsg">개장과 시식 체험단 소식을 문자로 알려 드리겠습니다.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-faq" style="display:grid;gap:8px">
+    <h2 id="h-faq">자주 묻는 질문</h2>
+    <details><summary>지금 주문할 수 있나요?</summary><p>아직은 주문을 받지 않습니다. 2026년 12월에 시식 체험단을 먼저 운영하고, 정기 배송은 그 결과를 보고 시작합니다.</p></details>
+    <details><summary>정말 그날 딴 딸기인가요?</summary><p>그렇게 운영하려고 준비하고 있습니다. 라벨에 농장과 수확 시각을 적어, 언제 딴 딸기인지 직접 확인하실 수 있게 하겠습니다.</p></details>
+    <details><summary>등록을 취소하고 싶어요</summary><p>아래 이메일로 휴대폰 번호와 함께 알려 주시면 바로 삭제합니다.</p></details>
+    <details><summary>농가인데 어떤 조건으로 함께하나요?</summary><p>아침 8시 30분까지 시흥으로 딸기를 가져와 주시면, 농장별로 따로 선별해 그날 소비자에게 전합니다. 매입 조건은 개별 상담으로 정합니다.</p></details>
+  </section>
+
+  <footer>
+    <span>SynBerry · 경기 시흥 · 개장 준비 중 (사업자 등록 전 단계로, 판매·결제를 하지 않습니다)</span>
+    <span>문의 <span id="mail">synitart@gmail.com</span><button class="copy" type="button" id="copyMail">복사</button></span>
+  </footer>
+</div>
+
+<script>
+/* GitHub Pages용: google.script.run 을 Apps Script 웹 앱(doPost) 호출로 대체 */
+(function(){
+  var EXEC = "https://script.google.com/macros/s/AKfycbxR3iRtfJbjJ2vlYViPKpsKm_nVTqVA4sZReIqip7gs1ZGxeb2xFNVJZm-jLhm1J9U/exec";
+  function call(fn, arg, ok, fail){
+    fetch(EXEC, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify({fn:fn, arg:arg})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if (j && j.ok) ok && ok(j.result); else fail && fail(new Error((j && j.error) || "처리하지 못했습니다.")); })
+      .catch(function(){ fail && fail(new Error("전송하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 눌러 주세요.")); });
+  }
+  function runner(ok, fail){
+    return {
+      withSuccessHandler: function(f){ return runner(f, fail); },
+      withFailureHandler: function(f){ return runner(ok, f); },
+      submit:   function(d){ call("submit", d, ok, fail); },
+      getStats: function(k){ call("getStats", k, ok, fail); }
+    };
+  }
+  window.google = {script:{run: runner(null, null)}};
+})();
+</script>
+<script>
+(function(){
+  // Apps Script 웹 앱 안에서 열리면 실제 저장, 그 밖(미리보기)에서는 저장하지 않음
+  var LIVE = !!(window.google && google.script && google.script.run);
+  var type = "home";
+  var LABELS = {home:"가정 정기배송", exp:"딸기 따기 체험", org:"학교·기관 단체", farm:"협력 농가"};
+  var tabs = document.querySelectorAll('[role="tab"]');
+  function show(t){
+    type = t;
+    tabs.forEach(function(b){ b.setAttribute("aria-selected", String(b.dataset.type === t)); });
+    document.querySelectorAll("[data-for]").forEach(function(el){
+      el.hidden = el.getAttribute("data-for").split(" ").indexOf(t) < 0;
+    });
+    try { sessionStorage.setItem("sb-tab", t); } catch(e){}
+  }
+  tabs.forEach(function(b){ b.addEventListener("click", function(){ show(b.dataset.type); }); });
+  var saved = null; try { saved = sessionStorage.getItem("sb-tab"); } catch(e){}
+  show(LABELS[saved] ? saved : "home");
+
+  function val(id){ var el = document.getElementById(id); return el ? (el.type === "checkbox" ? el.checked : el.value.trim()) : ""; }
+  function radio(n){ var r = document.querySelector('input[name="'+n+'"]:checked'); return r ? r.value : ""; }
+
+  document.getElementById("f").addEventListener("submit", function(e){
+    e.preventDefault();
+    var err = document.getElementById("err"); err.textContent = "";
+    var phone = val("phone").replace(/[^0-9]/g, "");
+    if (!val("name")) { err.textContent = "이름 또는 닉네임을 적어 주세요."; document.getElementById("name").focus(); return; }
+    if (!/^01[0-9]{8,9}$/.test(phone)) { err.textContent = "휴대폰 번호를 010-0000-0000 형식으로 적어 주세요."; document.getElementById("phone").focus(); return; }
+    if (!val("agree")) { err.textContent = "등록하려면 개인정보 수집·이용에 동의해 주세요."; document.getElementById("agree").focus(); return; }
+    var data = {
+      submittedAt: new Date().toISOString(), type: LABELS[type], name: val("name"), phone: phone,
+      area: val("area"), freq: radio("freq"), price: radio("price"), taster: val("taster"),
+      expPeople: val("expn"), expDay: val("expw"), orgType: val("orgt"), orgPeople: val("orgn"), orgInterest: val("orgi"),
+      farmLoc: val("farml"), farmArea: val("farma"), farmDelivery: radio("deliv"), memo: val("memo"), marketing: val("mkt")
+    };
+    var btn = document.getElementById("submit"); btn.disabled = true; btn.textContent = "등록하는 중…";
+    function finish(preview){
+      document.getElementById("f").hidden = true;
+      document.getElementById("done").hidden = false;
+      document.getElementById("doneMsg").textContent = preview
+        ? "미리보기 화면이라 실제로 저장되지는 않았습니다."
+        : LABELS[type] + " 등록이 완료되었습니다. 개장과 시식 체험단 소식을 알려 드리겠습니다.";
+    }
+    if (!LIVE) { finish(true); return; }
+    google.script.run
+      .withSuccessHandler(function(){ finish(false); })
+      .withFailureHandler(function(e){ btn.disabled = false; btn.textContent = "무료로 등록하기";
+        err.textContent = (e && e.message) ? e.message : "전송하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 눌러 주세요."; })
+      .submit(data);
+  });
+
+  document.getElementById("copyMail").addEventListener("click", function(){
+    var t = document.getElementById("mail").textContent, b = this;
+    function sel(){ var r = document.createRange(); r.selectNodeContents(document.getElementById("mail"));
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try { navigator.clipboard.writeText(t).then(function(){ b.textContent = "복사됨"; }, sel); } catch(e){ sel(); }
+  });
+})();
+</script>
+
+</body>
+</html>
