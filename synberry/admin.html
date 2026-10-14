@@ -121,7 +121,7 @@ svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
   </section>
 
   <section class="card" aria-labelledby="h-daily">
-    <h2 id="h-daily">일별 등록 (최근 30일)</h2>
+    <h2 id="h-daily">일별 응답 (최근 30일)</h2>
     <div class="chart" id="daily"></div>
   </section>
 </div>
@@ -195,7 +195,7 @@ svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
       return '<line x1="' + P.l + '" x2="' + (W-P.r) + '" y1="' + y(g) + '" y2="' + y(g) + '" stroke="var(--line)" stroke-width="1"/><text x="' + (P.l-8) + '" y="' + (y(g)+4) + '" text-anchor="end">' + g + '</text>'; }).join("");
     var lab = keys.map(function(k, i){ return (i % 5 === 0 || i === keys.length-1) ? '<text x="' + x(i) + '" y="' + (H-8) + '" text-anchor="middle">' + k.slice(5).replace("-", ".") + '</text>' : ""; }).join("");
     var lastI = vals.length - 1;
-    $("daily").innerHTML = vals.length ? '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" style="min-width:560px" role="img" aria-label="최근 30일 일별 등록 수">' + grid +
+    $("daily").innerHTML = vals.length ? '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" style="min-width:560px" role="img" aria-label="최근 30일 일별 응답 수">' + grid +
       '<polygon points="' + P.l + ',' + (H-P.b) + ' ' + pts + ' ' + x(lastI) + ',' + (H-P.b) + '" fill="var(--berry)" fill-opacity=".18"/>' +
       '<polyline points="' + pts + '" fill="none" stroke="var(--berry)" stroke-width="3"/>' +
       '<circle cx="' + x(lastI) + '" cy="' + y(vals[lastI]) + '" r="6" fill="var(--berry)"/>' + lab + '</svg>'
@@ -206,7 +206,7 @@ svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
     var priced = s.price["12000"] + s.price["18000"] + s.price["22000"];
     var accept = priced ? Math.round((s.price["18000"] + s.price["22000"]) / priced * 100) : 0;
     var avg = priced ? Math.round((12000*s.price["12000"] + 18000*s.price["18000"] + 22000*s.price["22000"]) / priced) : 0;
-    kpi("k-total", "전체 등록", s.total, T.total, "명");
+    kpi("k-total", "전체 응답", s.total, T.total, "명");
     kpi("k-price", "가격 선호 응답 (H3)", priceN, T.price, "건");
     kpi("k-taster", "시식 체험단 희망 (H2)", s.taster, T.taster, "가구");
     kpi("k-farm", "협력 농가 · 시흥 인도 가능 (H1)", s.farms.deliverable, T.farm, "곳");
