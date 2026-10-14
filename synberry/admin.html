@@ -76,7 +76,7 @@ svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
 <div class="wrap">
   <header class="top">
     <div style="display:grid;gap:4px;min-width:0">
-      <h1>SynBerry 관심 등록 현황</h1>
+      <h1>SynBerry 수요 조사 응답 현황</h1>
       <span class="meta" id="updated">불러오는 중…</span>
     </div>
     <div class="controls" id="ctl">
@@ -103,7 +103,7 @@ svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
   </section>
 
   <section class="grid2">
-    <div class="card"><h2>등록 유형</h2><div class="hbars" id="byType"></div></div>
+    <div class="card"><h2>응답 유형</h2><div class="hbars" id="byType"></div></div>
     <div class="card"><h2>배송 권역</h2><div class="hbars" id="byZone"></div></div>
   </section>
 
@@ -157,7 +157,7 @@ svg text{fill:var(--muted);font-family:var(--f-mono);font-size:12px}
     var daily = {}, d = new Date(), n = [0,1,0,2,3,1,4,2,5,3,6,4,3,8,5,7,6,9,4,7,10,6,8,5,9,11,7,8,12,9];
     for (var i = 29; i >= 0; i--){ var x = new Date(d - i*864e5); daily[x.toISOString().slice(0,10)] = n[29-i]; }
     return {ok:true, sample:true, updatedAt:new Date().toISOString(), total:182,
-      byType:{"가정 배송 관심":141,"딸기 따기 체험":26,"학교·기관 단체":11,"협력 농가":4},
+      byType:{"가정 배송 수요":141,"딸기 따기 체험 수요":26,"학교·기관 단체 수요":11,"협력 농가 참여 의향":4},
       byZone:{"20분권":88,"40분권":52,"60분권":31,"기타":7},
       price:{"12000":24,"18000":61,"22000":19,"모름":13}, taster:47, marketing:120,
       farms:{count:4, deliverable:2, partial:1, hard:1}, org:{count:11, people:236}, exp:{count:26, people:97}, daily:daily};
