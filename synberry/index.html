@@ -323,6 +323,14 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
   var saved = null; try { saved = sessionStorage.getItem("sb-tab"); } catch(e){}
   show(LABELS[saved] ? saved : "home");
 
+  // 유입경로: 주소 끝 ?src=… 값(영문·숫자·-_ 40자 이내). 없으면 direct
+  var SRC = "direct";
+  try {
+    var q = (new URLSearchParams(location.search).get("src") || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
+    if (q) { SRC = q; sessionStorage.setItem("sb-src", q); }
+    else { SRC = sessionStorage.getItem("sb-src") || "direct"; }
+  } catch(e){}
+
   function val(id){ var el = document.getElementById(id); return el ? (el.type === "checkbox" ? el.checked : el.value.trim()) : ""; }
   function radio(n){ var r = document.querySelector('input[name="'+n+'"]:checked'); return r ? r.value : ""; }
 
@@ -337,7 +345,7 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
       submittedAt: new Date().toISOString(), type: LABELS[type], name: val("name"), phone: phone,
       area: val("area"), freq: radio("freq"), price: radio("price"), taster: val("taster"),
       expPeople: val("expn"), expDay: val("expw"), orgType: val("orgt"), orgPeople: val("orgn"), orgInterest: val("orgi"),
-      farmLoc: val("farml"), farmArea: val("farma"), farmDelivery: radio("deliv"), memo: val("memo"), marketing: val("mkt")
+      farmLoc: val("farml"), farmArea: val("farma"), farmDelivery: radio("deliv"), memo: val("memo"), marketing: val("mkt"), src: SRC
     };
     var btn = document.getElementById("submit"); btn.disabled = true; btn.textContent = "제출하는 중…";
     function finish(preview){
