@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>산업안전기사 실기 합격노트 받기 · NOusafe</title>
+<title>산업안전기사 실기 합격노트 받기 · NoUnsafe</title>
 <meta name="description" content="산업안전기사 합격자가 실제로 쓴 실기 암기노트 6개 분야, 문항 237개. 닉네임만 적으면 바로 받을 수 있습니다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +23,7 @@ a{color:var(--accent)}
 header.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 0;border-bottom:2px solid var(--line)}
 .logo{font-weight:900;font-size:1.25rem;letter-spacing:.01em}
 .logo b{color:var(--accent)}
+.logo .hold{color:var(--muted);font-weight:700;font-size:.9em}
 .pill{font-size:.85rem;font-weight:700;border:2px solid var(--line);padding:3px 12px;border-radius:999px;color:var(--muted)}
 h1{font-size:clamp(1.9rem,1.4rem + 2.4vw,2.6rem);line-height:1.25;margin:32px 0 10px;font-weight:900}
 .lead{color:var(--muted);font-size:1.12rem;margin:0 0 22px}
@@ -54,7 +55,9 @@ select{appearance:auto}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .done h2{color:var(--ok)}
 .done ol{margin:6px 0 0 1.2em;padding:0} .done li{padding:4px 0}
-.sb{border:2px dashed var(--line);border-radius:14px;padding:18px 20px;margin-top:22px}
+.sb{border:2px solid #D7263D;background:rgba(215,38,61,.12);border-radius:14px;padding:18px 20px;margin:18px 0 22px}
+.btn.berry{text-decoration:none;background:#D7263D;color:#fff}
+.sb .tag{display:inline-block;font-size:.85rem;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 10px;margin-bottom:8px}
 .sb h3{margin:0 0 6px;font-size:1.15rem}
 .sb p{margin:0 0 12px;color:var(--muted)}
 footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:var(--muted);font-size:.92rem}
@@ -63,7 +66,7 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:v
 </head>
 <body>
 <div class="wrap">
-  <header class="top"><span class="logo">NO<b>usafe</b></span><span class="pill">무료 공유</span></header>
+  <header class="top"><span class="logo"><span class="hold">SynItArt ·</span> No<b>Unsafe</b></span><span class="pill">무료 공유</span></header>
 
   <main>
     <h1>산업안전기사 실기 합격노트</h1>
@@ -144,21 +147,22 @@ footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:v
       <h2>준비됐습니다. 합격을 기원합니다!</h2>
       <p>다운로드가 자동으로 시작됩니다. 시작되지 않으면 아래 버튼을 눌러 주세요.</p>
       <p style="margin:14px 0"><button class="btn" type="button" id="dl">노트 내려받기</button></p>
+      <div class="sb">
+        <span class="tag">선택 사항 · 노트와 무관</span>
+        <h3>🍓 수도권 딸기 1분 설문</h3>
+        <p>같은 운영자가 준비 중인 시흥 스마트팜 SynBerry 설문입니다. 원하시는 분만 12월 무료 시식 체험단 선정 대상이 됩니다.</p>
+        <a class="btn berry" href="/synberry/?src=nousafe-notes#signup">🍓 1분 설문하고 시식 체험단 신청하기 →</a>
+      </div>
       <ol>
         <li>내려받은 <b>산업안전기사_실기_합격노트.html</b> 파일을 누르면 브라우저로 열립니다.</li>
         <li>처음 화면의 "이렇게 쓰세요"를 먼저 보세요.</li>
         <li>휴대폰은 파일 앱(다운로드 폴더)에서 열면 됩니다.</li>
       </ol>
-      <div class="sb">
-        <h3>선택: 수도권 딸기 수요조사에도 참여해 주실래요?</h3>
-        <p>같은 운영자가 준비 중인 시흥 스마트팜 SynBerry의 1분 설문입니다. 참여는 노트와 상관없고, 원하시는 분만 12월 무료 시식 체험단 선정 대상이 됩니다.</p>
-        <a class="btn ghost" href="/synberry/?src=nousafe-notes#signup">SynBerry 설문 보기 →</a>
-      </div>
     </section>
   </main>
 
   <footer>
-    운영: SynItArt · NOusafe · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a><br>
+    운영: SynItArt · NoUnsafe · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a><br>
     이 노트는 개인 학습용입니다. 다른 곳에 올리실 때는 출처를 밝혀 주시고, 판매·유료 배포는 삼가 주세요.
   </footer>
 </div>
