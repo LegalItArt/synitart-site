@@ -4,24 +4,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SynItArt</title>
-<meta name="description" content="SynItArt — SynBerry 딸기 스마트팜 수요 조사">
+<meta name="description" content="SynItArt — 법률·안전·금융·AI를 잇는 실무형 서비스. NoUnsafe 안전, SynBerry 스마트팜, HeirWise 상속·증여 재무설계">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap">
 <style>
-:root{--bg:#FFF9F7;--ink:#1D1314;--muted:#5A4A4C;--berry:#B5122B;--line:#E6D3D3}
+:root{--bg:#FFF9F7;--ink:#1D1314;--muted:#5A4A4C;--line:#E6D3D3;--focus:#0B57D0;--card:#FFFFFF}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:19px;line-height:1.6}
-main{max-width:720px;margin:0 auto;padding:56px 16px}
-h1{font-size:40px;margin:0 0 8px;letter-spacing:-.02em}
-p{color:var(--muted);margin:0 0 32px}
-a.card{display:block;border:2px solid var(--ink);border-radius:14px;padding:24px;text-decoration:none;color:var(--ink);background:#fff}
-a.card:hover,a.card:focus{border-color:var(--berry);outline:3px solid #0B57D0;outline-offset:2px}
-a.card b{display:block;font-size:28px;color:var(--berry)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:19px;line-height:1.6}
+main{max-width:720px;margin:0 auto;padding:48px 16px 56px}
+h1{font-size:44px;font-weight:900;margin:0 0 6px;letter-spacing:-.01em}
+h1 .it{color:#5A5F66}
+.lead{color:var(--muted);margin:0 0 28px}
+.cards{display:grid;gap:16px}
+a.card{display:block;border:2px solid var(--ink);border-radius:14px;padding:22px 22px 20px;text-decoration:none;color:var(--ink);background:var(--card)}
+a.card:hover{border-width:3px;padding:21px 21px 19px}
+a.card:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.wm{display:block;font-weight:900;font-size:30px;line-height:1.25;margin-bottom:6px}
+.wm .hold{color:#5A5F66;font-weight:700;font-size:.62em;margin-right:4px}
+.tm{font-size:.45em;font-weight:700;vertical-align:super;margin-left:1px}
+.desc{display:block;color:var(--muted)}
+.go{display:inline-block;margin-top:10px;font-weight:700}
+.ext{font-size:.85rem;color:var(--muted);font-weight:500}
+footer{max-width:720px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:.9rem}
 </style>
 </head>
 <body>
 <main>
-<h1>SynItArt</h1>
-<p>법률·안전·금융·AI를 잇는 실무형 서비스</p>
-<a class="card" href="/synberry/"><b>SynBerry 딸기 수요 조사 →</b>수도권 1시간 안의 딸기 산지 — 가정 배송·체험·단체 프로그램·협력 농가</a>
+<h1>Syn<span class="it">ItArt</span></h1>
+<p class="lead">법률·안전·금융·AI를 잇는 실무형 서비스</p>
+<div class="cards">
+  <a class="card" href="/nousafe/notes/?src=home">
+    <span class="wm"><span class="hold">SynItArt ·</span><span style="color:#D70015">No</span><span style="color:#111">Unsafe</span><span class="tm">™</span></span>
+    <span class="desc">산업안전기사 실기 합격노트 — 합격자가 실제로 쓴 6개 분야 237문항 · 무료</span>
+    <span class="go">노트 받기 →</span>
+  </a>
+  <a class="card" href="/synberry/?src=home">
+    <span class="wm"><span class="hold">SynItArt ·</span><span style="color:#1E6B3A">Syn</span><span style="color:#B5122B">Berry</span><span class="tm">™</span></span>
+    <span class="desc">수도권 1시간 안의 딸기 산지 — 가정 배송·체험·단체 프로그램·협력 농가 수요 조사</span>
+    <span class="go">1분 설문 →</span>
+  </a>
+  <a class="card" href="/heirwise/">
+    <span class="wm"><span class="hold">SynItArt ·</span><span style="color:#1B3A6B">Heir</span><span style="color:#7A5C0E">Wise</span><span class="tm">™</span></span>
+    <span class="desc">상속·증여 재무설계 — 기한 확인, 상속세 계산기, 우리 집 준비도 진단</span>
+    <span class="go">HeirWise로 가기 → <span class="ext">finitart.com</span></span>
+  </a>
+</div>
 </main>
+<footer>운영 SynItArt · 문의 synitart@gmail.com</footer>
 </body>
 </html>
