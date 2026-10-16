@@ -3,25 +3,449 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SynItArt</title>
-<meta name="description" content="SynItArt — SynBerry 딸기 스마트팜 수요 조사">
+<!-- SynItArt — synitart.com 허브 v2.0 (2026-10-16, design-v2)
+     첫 화면: 캔버스 터널 렌더러(앞차 추월·안개 입자·새벽빛), 끄기 버튼·reduced-motion 정지
+     출구 카드: SynItArt 브랜드 자격표시 규칙(회색 머리말 + 서비스명 두 색 + ™ 페이지 첫 1회)
+     노트(/nousafe/notes)는 허브에서 링크하지 않음(카페 신뢰 우선 결정). 제작: Syn Dae Sik (申大湜) · 보안등급: 공개용 -->
+<title>SynItArt — 불확실성의 시대를 지나는 출구전략 | 법률·안전·금융·AI</title>
+<meta name="description" content="상속·소송·안전·금융·AI — 막막한 일을 실무 순서대로 정리해 다음 단계까지 안내합니다. HeirWise·SynBerry·NoUnsafe·SeaBogo·Art of Lawsuit의 지주 SynItArt, 대표 신대식.">
+<link rel="canonical" href="https://synitart.com/">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="SynItArt">
+<meta property="og:url" content="https://synitart.com/">
+<meta property="og:title" content="SynItArt — 불확실성의 시대를 지나는 출구전략">
+<meta property="og:description" content="법률·안전·금융·AI를 잇는 실무형 서비스. 상속·소송·안전·금융·AI, 여섯 개 출구.">
+<meta name="author" content="Syn Dae Sik (신대식, 申大湜)">
+<meta name="theme-color" content="#0B1220">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://synitart.com/#org",
+      "name": "SynItArt",
+      "alternateName": ["신잇아트"],
+      "url": "https://synitart.com/",
+      "description": "자격으로 판단하고, AI로 끝까지 챙깁니다. HeirWise(상속 · 증여 · 재무설계, finitart.com), SynBerry(AI 스마트팜 6차산업), NoUnsafe(안전관리 플랫폼), SeaBogo(선박·어선 중개), Art of Lawsuit(사건 업무 전 과정 AI)의 지주.",
+      "founder": { "@type": "Person", "name": "신대식", "alternateName": ["Syn Dae Sik", "申大湜"], "url": "https://finitart.com/about.html" },
+      "email": "synitart@gmail.com",
+      "telephone": "+82-10-2088-5383",
+      "address": { "@type": "PostalAddress", "addressCountry": "KR", "addressRegion": "경기도", "addressLocality": "안산시 단원구", "streetAddress": "정왕천동로30번길 2(성곡동, 4바 858호 2층)" },
+      "sameAs": ["https://finitart.com/"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://synitart.com/#website",
+      "url": "https://synitart.com/",
+      "name": "SynItArt",
+      "inLanguage": "ko-KR",
+      "publisher": { "@id": "https://synitart.com/#org" }
+    }
+  ]
+}
+</script>
 <style>
-:root{--bg:#FFF9F7;--ink:#1D1314;--muted:#5A4A4C;--berry:#B5122B;--line:#E6D3D3}
+:root{
+  --bg:#0B1220; --surface:#152033; --text:#F5F7FA; --muted:#B6C2D1; --border:#33445C; /* text 17.4:1 · muted 10.4:1 */
+  --fog:182 194 209; --lamp:#E9C46A; --on-lamp:#0B1220; /* lamp 11.2:1 · on-lamp 11.2:1 */
+  --heirwise:#E9C46A; --seabogo:#4CC9F0; --lawsuit:#C4B5FD; --nousafe:#FFB020; --pqbt:#F9A8D4; --synberry:#4ADE80;
+  --radius-md:12px; --radius-lg:16px; --maxw:1280px;
+  --f:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:19px;line-height:1.6}
-main{max-width:720px;margin:0 auto;padding:56px 16px}
-h1{font-size:40px;margin:0 0 8px;letter-spacing:-.02em}
-p{color:var(--muted);margin:0 0 32px}
-a.card{display:block;border:2px solid var(--ink);border-radius:14px;padding:24px;text-decoration:none;color:var(--ink);background:#fff}
-a.card:hover,a.card:focus{border-color:var(--berry);outline:3px solid #0B57D0;outline-offset:2px}
-a.card b{display:block;font-size:28px;color:var(--berry)}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:18px/1.6 var(--f);word-break:keep-all;overflow-wrap:break-word}
+a{color:var(--lamp)}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:16px}
+@media(min-width:720px){.wrap{padding-inline:32px}}
+.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:8px;z-index:99;background:var(--surface);padding:8px 14px;border-radius:8px}
+h1,h2,h3{text-wrap:balance}
+h2{margin:0;font-size:32px;line-height:1.3;font-weight:700}
+h3{margin:0;font-size:26px;line-height:1.3;font-weight:700}
+.sec{padding-block:48px 24px}
+
+/* 진행 중 띠 */
+.band{background:var(--surface);border-bottom:1px solid var(--border)}
+.band .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-block:8px;font-size:16px;line-height:1.5}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}
+.dot.synberry{background:var(--synberry);box-shadow:0 0 12px 3px rgb(74 222 128 / .55)}
+.band .k{font-weight:700;letter-spacing:.06em;color:var(--muted)}
+.band a{margin-left:auto;display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-weight:700;color:var(--synberry);text-decoration:underline;text-underline-offset:4px}
+
+/* 메뉴 */
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;padding-block:24px}
+.logo{margin-right:auto;display:inline-flex;align-items:center;min-height:44px;font-size:26px;font-weight:900;letter-spacing:.04em;color:var(--text);text-decoration:none}
+nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;font-weight:500;color:var(--text);text-decoration:none}
+nav a:hover{color:var(--lamp)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:12px 28px;border-radius:var(--radius-md);font:inherit;font-size:20px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .15s ease-out,box-shadow .15s ease-out,border-color .15s ease-out}
+.btn:hover{transform:translateX(3px)}.btn:active{transform:scale(.96)}
+.btn-lamp{background:var(--lamp);color:var(--on-lamp)}
+.btn-lamp:hover{box-shadow:0 0 0 4px rgb(233 196 106 / .3),0 0 36px rgb(233 196 106 / .45)}
+.btn-line{border-color:var(--muted);color:var(--text);background:transparent}
+.btn-sm{min-height:44px;padding:8px 20px;font-size:18px}
+
+
+
+.hero{position:relative;overflow:hidden;min-height:min(100vh,860px);display:grid;align-content:center}
+canvas.tunnel{position:absolute;inset:0;width:100%;height:100%;display:block}
+.plate{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgb(11 18 32 / .80) 0%,rgb(11 18 32 / .64) 38%,rgb(11 18 32 / 0) 62%)}
+.hero .wrap{position:relative;max-width:1280px;width:100%;margin:0 auto;padding:40px 32px;display:grid;gap:20px;animation:reveal 1.2s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes reveal{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.hero .eyebrow{margin:0;font-size:18px;color:var(--muted);letter-spacing:.02em}
+.hero h1{margin:0;max-width:16ch;font-size:clamp(38px,5vw,66px);line-height:1.15;font-weight:900;letter-spacing:.01em;text-wrap:balance;text-shadow:0 2px 24px rgb(0 0 0 / .35)}
+.hero .lead{margin:0;max-width:600px;font-size:22px;color:var(--muted);text-wrap:pretty}
+.hero .cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.hero .btn{display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:12px 28px;border-radius:12px;background:var(--lamp);color:var(--on-lamp);font-size:20px;font-weight:700;text-decoration:none}
+.hero .more{color:var(--text);font-size:18px;font-weight:700;text-decoration:underline;text-underline-offset:5px}
+.exitsign{position:absolute;z-index:2;right:32px;top:40px;display:grid;gap:6px;padding:14px 18px;border-radius:12px;background:#0F5C3A;border:3px solid #F5F7FA;color:#F5F7FA;font-weight:800;line-height:1.3;box-shadow:0 0 0 2px #0B1220,0 8px 30px rgb(0 0 0 / .5);animation:signIn 1s .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes signIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.exitsign small{font-weight:600;font-size:14px;opacity:.9}
+.exitsign .n{justify-self:start;background:#F5F7FA;color:#0F5C3A;border-radius:6px;padding:2px 8px;font-size:15px}
+.motionbtn{position:absolute;right:32px;bottom:24px;z-index:3;min-height:44px;padding:0 14px;border-radius:999px;border:2px solid var(--muted);background:rgb(11 18 32 / .7);color:var(--text);font:700 15px/1.2 var(--f)}
+@media(max-width:900px){
+  .hero{align-content:start}
+  .hero .wrap{padding:24px 16px 0;gap:14px}
+  .plate{background:linear-gradient(180deg,rgb(11 18 32 / .85) 0%,rgb(11 18 32 / .78) 40%,rgb(11 18 32 / 0) 54%)}
+  .exitsign{display:none}
+  .hero h1{font-size:42px}.hero .lead{font-size:19px}
+  .motionbtn{right:16px;bottom:16px}
+}
+@media(prefers-reduced-motion:reduce){.hero .wrap,.exitsign{animation:none!important}}
+/* 출구 표지판 */
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px}
+.sec-head p{margin:0;color:var(--muted)}
+.exits{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px}
+.card{display:flex;flex-direction:column;gap:12px;min-height:196px;padding:24px;border-radius:var(--radius-lg);background:var(--surface);border:1px solid var(--border);color:var(--text);text-decoration:none;transition:transform .15s ease-out,border-color .15s ease-out}
+a.card:hover{transform:translateX(4px);border-color:var(--muted)}
+.card .top{display:flex;align-items:center;gap:12px}
+.card .no{font-variant-numeric:tabular-nums;font-size:16px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.card .lamp{width:14px;height:14px;border-radius:50%;flex:none}
+.card .lamp.heirwise{background:#E8C46A;box-shadow:0 0 16px 4px rgb(232 196 106 / .55)}
+.card .lamp.seabogo{background:#38BDF8;box-shadow:0 0 16px 4px rgb(56 189 248 / .55)}
+.card .lamp.lawsuit{background:var(--lawsuit);box-shadow:0 0 16px 4px rgb(196 181 253 / .55)}
+.card .lamp.nousafe{background:#FFD700;box-shadow:0 0 16px 4px rgb(255 215 0 / .5)}
+.card .lamp.pqbt{background:var(--pqbt);box-shadow:0 0 16px 4px rgb(249 168 212 / .55)}
+.card .lamp.synberry{background:#6BD493;box-shadow:0 0 16px 4px rgb(107 212 147 / .55)}
+.card .status{margin-left:auto;font-size:16px;font-weight:700}
+.card h3 small{font-size:18px;font-weight:500;color:var(--muted)}
+.card p{margin:0;color:var(--muted)}
+.card .go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:700}
+.card.is-soon{border-style:dashed}
+.card.is-soon .go{color:var(--muted);text-decoration:none}
+.card.is-soon .go a{color:var(--text);text-decoration:underline;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.go-heirwise{color:#E8C46A}.go-seabogo{color:var(--seabogo)}.go-lawsuit{color:var(--lawsuit)}.go-nousafe{color:var(--nousafe)}.go-pqbt{color:var(--pqbt)}.go-synberry{color:#6BD493}
+
+/* 답하는 사람 */
+.people .lane-static{height:2px;margin:0 0 40px;background:repeating-linear-gradient(90deg,rgb(var(--fog) / .55) 0 32px,transparent 32px 64px)}
+.people-grid{margin-top:16px;display:flex;flex-wrap:wrap;gap:24px 48px}
+.people-grid>div{flex:1 1 360px;display:flex;flex-direction:column;gap:8px}
+.people-grid p{margin:0;color:var(--muted)}
+.creds{flex:2 1 560px;margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-content:flex-start;gap:12px}
+.creds li{padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-weight:500}
+
+/* 바닥글 */
+footer{margin-top:40px;border-top:1px solid var(--border)}
+footer .wrap{padding-block:40px 48px;display:flex;flex-direction:column;gap:20px}
+footer .row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
+footer .brand{font-size:24px;font-weight:900;letter-spacing:.04em}
+footer p,footer ul{margin:0;color:var(--muted)}
+footer ul{padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px 32px}
+footer .fine{font-size:16px}
+footer .fine a{color:var(--text);text-decoration:underline;text-underline-offset:4px}
+
+
+/* 브랜드 자격표시: 회색 머리말 + 서비스명 두 색 + ™(페이지 첫 1회). 30px 굵은 글씨 = 큰 글자 기준 4.5:1 이상(No 4.6, Berry 5.5) */
+.wm,.cwm{font-family:"Noto Sans KR",var(--f)}
+.cwm .co{color:#F3F6F9}.cwm .it{color:#AEBBC8}
+.wm{display:block;font-weight:900;font-size:30px;line-height:1.25;letter-spacing:-.005em}
+.wm .hold{color:#AEBBC8;font-weight:700;font-size:.62em;margin-right:6px;letter-spacing:.02em}
+.wm .tm{font-size:.45em;font-weight:700;vertical-align:super;margin-left:1px;color:#AEBBC8}
+.wm .of{font-size:.62em;color:#C9A7FF;margin:0 .14em}
+.card .ko{display:block;margin-top:2px;font-size:17px;font-weight:600;color:var(--muted)}
+.card.is-soon .status{color:var(--muted)}
+@media print{
+  :root{--bg:#FFFFFF;--surface:#F8FAFC;--text:#0F172A;--muted:#475569;--border:#94A3B8;--lamp:#6B4E00;--on-lamp:#FFFFFF}
+  canvas.tunnel,.plate,.lane-static,.band,.motionbtn,.exitsign{display:none!important}
+  .hero{min-height:auto}
+  .hero,.card,footer{break-inside:avoid}
+  a{color:var(--text)}
+}
 </style>
 </head>
 <body>
-<main>
-<h1>SynItArt</h1>
-<p>법률·안전·금융·AI를 잇는 실무형 서비스</p>
-<a class="card" href="/synberry/"><b>SynBerry 딸기 수요 조사 →</b>수도권 1시간 안의 딸기 산지 — 가정 배송·체험·단체 프로그램·협력 농가</a>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<div class="band">
+  <div class="wrap">
+    <span class="dot synberry" aria-hidden="true"></span>
+    <span class="k">진행 중</span>
+    <span>SynBerry 딸기 수요 조사 — 수도권 1시간 거리 농장, 가정 배송·체험·단체·협력 농가</span>
+    <a href="/synberry/?src=home-band">설문 응답하기 (1분) →</a>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a class="logo cwm" href="#top" aria-label="SynItArt 처음으로"><span class="co">Syn</span><span class="it">ItArt</span></a>
+    <nav aria-label="주 메뉴">
+      <a href="#exits">출구 안내</a>
+      <a href="#people">대표 소개</a>
+    </nav>
+    <a class="btn btn-line btn-sm" href="#contact">문의하기</a>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" id="top" aria-labelledby="heroH">
+  <canvas class="tunnel" id="tunnel" aria-hidden="true"></canvas>
+  <div class="plate" aria-hidden="true"></div>
+  <div class="exitsign" aria-hidden="true"><span class="n">EXIT 1–5</span><span>법률·안전·금융·AI<br>출구 다섯 곳</span><small>아래 출구 안내에서 고르세요</small></div>
+  <div class="wrap">
+    <p class="eyebrow">자격으로 판단하고, AI로 끝까지 챙깁니다.</p>
+    <h1 id="heroH">불확실성의 시대를<br>지나는 출구전략</h1>
+    <p class="lead">불확실할수록 순서가 중요합니다. 법률·안전·금융·AI를 한 사람이 이어서, 지금 할 일부터 기한까지 밝혀 드립니다.</p>
+    <div class="cta"><a class="btn" href="#exits">내 출구 찾기 →</a><a class="more" href="#people">답하는 사람 보기</a></div>
+  </div>
+  <button class="motionbtn" id="motionBtn" type="button" aria-pressed="false">배경 움직임 끄기</button>
+</section>
+
+<section class="sec" id="exits" aria-labelledby="exitsH">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="exitsH">출구 안내</h2><p>가로등 색이 각 서비스의 표시색입니다.</p></div>
+    <ul class="exits">
+      <li><a class="card" href="/heirwise/">
+        <div class="top"><span class="no">EXIT 01</span><span class="lamp heirwise" aria-hidden="true"></span></div>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#8FB4FF">Heir</span><span style="color:#E8C46A">Wise</span><span class="tm">™</span></h3><span class="ko">에어와이즈</span>
+        <p>상속 · 증여 · 재무설계 — 기한 확인, 계산기, 우리 집 준비도 진단.</p>
+        <span class="go go-heirwise">HeirWise로 가기 → <small style="font-weight:500;color:var(--muted)">finitart.com</small></span>
+      </a></li>
+      <li><a class="card" href="/synberry/?src=home">
+        <div class="top"><span class="no">EXIT 02</span><span class="lamp synberry" aria-hidden="true"></span></div>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#6BD493">Syn</span><span style="color:#FF5C70">Berry</span><span class="tm">™</span></h3><span class="ko">신베리 · 설문 진행 중</span>
+        <p>AI 스마트팜 6차산업 — 수도권 1시간 거리 딸기 생산·유통·체험.</p>
+        <span class="go go-synberry">1분 설문 →</span>
+      </a></li>
+      <li><div class="card is-soon">
+        <div class="top"><span class="no">EXIT 03</span><span class="lamp nousafe" aria-hidden="true"></span><span class="status">준비 중</span></div>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#FF3B30">No</span><span style="color:#FFD700">Unsafe</span><span class="tm">™</span></h3>
+        <p>안전관리 플랫폼 — 사업장 안전관리 의무와 사고 후 대응을 한 화면에.</p>
+        <span class="go">준비 중 · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a></span>
+      </div></li>
+      <li><div class="card is-soon">
+        <div class="top"><span class="no">EXIT 04</span><span class="lamp seabogo" aria-hidden="true"></span><span class="status">준비 중</span></div>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#38BDF8">Sea</span><span style="color:#FF9F43">Bogo</span></h3><span class="ko">씨보고</span>
+        <p>선박·어선 중개 — 어선·선박 매물과 해외 바이어 연결.</p>
+        <span class="go">준비 중 · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a></span>
+      </div></li>
+      <li><div class="card is-soon">
+        <div class="top"><span class="no">EXIT 05</span><span class="lamp lawsuit" aria-hidden="true"></span><span class="status">준비 중</span></div>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#FFE9B8">Art</span><span class="of">of</span><span style="color:#C9A7FF">Lawsuit</span></h3><span class="ko">소송의기술</span>
+        <p>사건 업무 전 과정 AI — 접수 → 정리 → 작성 → 검증 → 기한. 판단은 전문가에게, 반복은 AI에게.</p>
+        <span class="go">준비 중 · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a></span>
+      </div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec people" id="people" aria-labelledby="peopleH">
+  <div class="wrap">
+    <div class="lane-static" aria-hidden="true"></div>
+    <h2 id="peopleH">답하는 사람</h2>
+    <div class="people-grid">
+      <div>
+        <h3>대표 Syn Dae Sik <small style="font-weight:500;color:var(--muted)">(申大湜)</small></h3>
+        <p>사고를 막는 일부터 남은 재산을 지키는 일까지, 한 사람이 끝까지 봅니다. 어느 출구로 들어와도 같은 사람이 답합니다.</p>
+        <p><a href="https://finitart.com/about.html">소개 자세히 보기 →</a></p>
+      </div>
+      <ul class="creds" aria-label="보유 자격">
+        <li>산업안전기사 · 소방설비기사(기계·전기) · 소방기술자 중급</li>
+        <li>어선중개업 (2026.5)</li>
+        <li>법학 전공 · 법무법인 실무(회생파산)</li>
+        <li>상속법 전문과정 수료 (2026)</li>
+        <li>부동산 경공매 권리분석</li>
+        <li>MBA 경영·전략</li>
+        <li>AI·데이터 실무교육 3,603시간 (11월 3,951시간)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 </main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="row">
+      <div class="brand cwm"><span class="co">Syn</span><span class="it">ItArt</span></div>
+      <a class="btn btn-line btn-sm" href="tel:01020885383">010-2088-5383</a>
+    </div>
+    <p>SynItArt | 대표 Syn Dae Sik (申大湜) · synitart.com · <a href="mailto:synitart@gmail.com">synitart@gmail.com</a> · 010-2088-5383 · 금융 서비스(HeirWise)는 <a href="/heirwise/">finitart.com</a></p>
+    <ul>
+      <li>안산사무소: 경기 안산시 단원구 정왕천동로30번길 2(성곡동, 4바 858호 2층)</li>
+      <li>김포사무소: 경기 김포시 북변동 382-5 3층</li>
+      <li>서울사무소: 서울 강남구 논현로106길 6 봉산빌딩 4층</li>
+    </ul>
+    <p class="fine"><a href="/privacy.html">개인정보처리방침</a> · © 2026 SynItArt · synitart.com · finitart.com</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+/* ── 터널 렌더러 v6 ──
+   단위 m. 폭 12 · 벽 3.2 · 아치 5.6 · 운전석 1.25 · 60km/h · 조명 16m 2열 · 곡선 반경 1100m
+   레이어: 출구 밖 풍경 → 천장·벽(타일, 조명 명암 그라디언트) → 노면(아스팔트 질감) → 차선 → 조명·반사 → 시설물(제트팬·비상등·비상구) → 전조등 → 블룸 → 비네트 */
+var cv=document.getElementById('tunnel'),hero=document.getElementById('top'),ctx=cv.getContext('2d');
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, mobile=matchMedia('(max-width: 900px)').matches;
+var W,H,DPR,F,CX,CY,bloom,bctx,BW,BH;
+function resize(){DPR=Math.min(devicePixelRatio||1,1.5);W=hero.clientWidth;H=hero.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+  F=(mobile?1.05:0.85)*W;CX=W*(mobile?0.60:0.63);CY=H*(mobile?0.66:0.54);
+  BW=Math.max(64,Math.round(W/5));BH=Math.max(64,Math.round(H/5));bloom=document.createElement('canvas');bloom.width=BW;bloom.height=BH;bctx=bloom.getContext('2d');}
+addEventListener('resize',resize);resize();
+/* 아스팔트·타일 질감(절차적 노이즈, 한 번만) */
+var asph=document.createElement('canvas');asph.width=asph.height=256;(function(){var c=asph.getContext('2d'),im=c.createImageData(256,256),d=im.data;for(var i=0;i<d.length;i+=4){var n=200+Math.random()*55-((Math.random()<0.04)?60:0);d[i]=n*0.95;d[i+1]=n;d[i+2]=n*1.12;d[i+3]=255;}c.putImageData(im,0,0);})();
+var HW=6.0,WALL=3.2,TOP=5.6,CAMX=1.6,CAMY=1.25,SPEED=16.7,LAMP=16,EXITZ=300,R=1100;
+var arcX=[-6,-5,-3.8,-2.4,-0.8,0.8,2.4,3.8,5,6];
+function arcY(x){var t=x/HW;return WALL+(TOP-WALL)*Math.sqrt(Math.max(0,1-t*t));}
+function curve(z){return z*z/(2*R);} /* 완만한 우곡선 */
+function P(x,y,z,camY){return [CX+F*(x+curve(z)-CAMX)/z, CY-F*(y-camY)/z];}
+function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+function rgb(c,a){return 'rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+','+(a==null?1:a)+')';}
+var FOG_NEAR=[40,48,64],FOG_FAR=[222,228,236];
+function fogOf(z,exitD){var t=Math.min(1,z/exitD);return {col:mix(FOG_NEAR,FOG_FAR,t*t),amt:Math.min(.93,1-Math.exp(-z/150))};}
+function lampLight(zw){var d=((zw%LAMP)+LAMP)%LAMP;var d2=Math.min(d,LAMP-d);return 1.05/(1+(d2/3.6)*(d2/3.6));}
+function hash(n){var x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+function poly(pts,fill){ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(var i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);ctx.closePath();ctx.fillStyle=fill;ctx.fill();}
+var DAWN=0;
+function shadeAt(base,zw,zr,exitD,extra){var l=0.14+lampLight(zw)*1.05+(extra||0);var c=[base[0]*l,base[1]*l,base[2]*l];
+  var k=DAWN*Math.pow(Math.min(1,zr/exitD),1.6); /* 출구 쪽 면일수록 새벽빛 */
+  if(k>0)c=mix(c,[c[0]*1.25+70,c[1]*1.05+44,c[2]*0.8+18],Math.min(.75,k));
+  var fg=fogOf(zr,exitD);return mix(c,mix(fg.col,[250,226,190],DAWN*0.5),fg.amt);}
+/* 구간 앞뒤의 밝기를 잇는 선형 그라디언트(조명 아래 밝고 사이는 어둡게) */
+function gradZ(base,x,y,zw,zn,zf,camZ,exitD,extra){var a=P(x,y,zn,camY_),b=P(x,y,zf,camY_);var g=ctx.createLinearGradient(a[0],a[1],b[0],b[1]);
+  g.addColorStop(0,rgb(shadeAt(base,zw,zn,exitD,extra)));g.addColorStop(.5,rgb(shadeAt(base,zw+(zf-zn)/2,(zn+zf)/2,exitD,extra)));g.addColorStop(1,rgb(shadeAt(base,zw+(zf-zn),zf,exitD,extra)));return g;}
+var WALLC=[150,158,170],WALLLO=[128,136,148],CEILC=[66,72,86],ROADC=[30,35,46],GRIME=[46,50,60],camY_=CAMY;
+function drawOutside(ex,er,exitD,camY){ /* 출구 밖: 안개 낀 새벽 강변길 */
+  var pts=[];for(var i=0;i<arcX.length;i++)pts.push(P(arcX[i],arcY(arcX[i]),exitD,camY));pts.push(P(HW,0,exitD,camY));pts.push(P(-HW,0,exitD,camY));
+  ctx.save();ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(var k=1;k<pts.length;k++)ctx.lineTo(pts[k][0],pts[k][1]);ctx.closePath();ctx.clip();
+  var sky=ctx.createLinearGradient(0,ex[1]-er*2,0,ex[1]+er*0.8);sky.addColorStop(0,'#E8E2CF');sky.addColorStop(.6,'#F4EFDE');sky.addColorStop(1,'#CFD8E3');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+  /* 밖의 도로가 이어짐 */
+  var rz=exitD+0.5;poly([P(-HW,0,rz,camY),P(HW,0,rz,camY),P(HW*0.9,0,rz*3,camY),P(-HW*0.9,0,rz*3,camY)],'rgba(150,158,166,.9)');
+  for(var j=0;j<4;j++){var lz=exitD+8+j*16;[-2.6,2.6].forEach(function(lx){var b=P(lx*1.9,0,lz,camY),t=P(lx*1.9,7,lz,camY);ctx.strokeStyle='rgba(90,100,112,.55)';ctx.lineWidth=Math.max(1,F/lz*0.15);ctx.beginPath();ctx.moveTo(b[0],b[1]);ctx.lineTo(t[0],t[1]);ctx.stroke();});}
+  var hz=ctx.createRadialGradient(ex[0],ex[1],0,ex[0],ex[1],er*1.8);hz.addColorStop(0,'rgba(255,248,225,.95)');hz.addColorStop(1,'rgba(255,248,225,0)');ctx.fillStyle=hz;ctx.fillRect(0,0,W,H);
+  ctx.restore();}
+function draw(t){
+  var camZ=SPEED*t, camY=CAMY+(reduce?0:0.012*Math.sin(t*2*Math.PI*1.4)+0.004*Math.sin(t*2*Math.PI*5.3)); camY_=camY;
+  var exitD=Math.max(100,EXITZ-camZ*0.55);
+  DAWN=Math.min(1,(EXITZ-exitD)/(EXITZ-100))*0.85+0.15; /* 출구가 다가올수록 0.15→1 */
+  ctx.fillStyle='#0B1220';ctx.fillRect(0,0,W,H);
+  var ex=P(0,WALL+1.2,exitD,camY), er=F/exitD*9;
+  drawOutside(ex,er,exitD,camY);
+  var SEG=8, zStart=Math.floor(camZ/SEG)*SEG, segs=[];
+  for(var zw=zStart;zw<camZ+exitD;zw+=SEG)segs.push(zw);
+  for(var s=segs.length-1;s>=0;s--){
+    var zw=segs[s], zn=Math.max(0.6,zw-camZ), zf=Math.min(exitD,zw+SEG-camZ); if(zf<=zn)continue;
+    var zm=(zn+zf)/2, near=zm<140, fa=1-fogOf(zm,exitD).amt;
+    /* 천장 */
+    for(var i=0;i<arcX.length-1;i++){var x0=arcX[i],x1=arcX[i+1],xm=(x0+x1)/2;
+      poly([P(x0,arcY(x0),zn,camY),P(x1,arcY(x1),zn,camY),P(x1,arcY(x1),zf,camY),P(x0,arcY(x0),zf,camY)],gradZ(CEILC,xm,arcY(xm),zw,zn,zf,camZ,exitD,-0.08*Math.abs(xm)/HW+hash(zw+i)*0.04));}
+    /* 링 이음선 */
+    ctx.strokeStyle='rgba(0,0,0,'+(0.3*fa)+')';ctx.lineWidth=Math.max(.6,F/zn*0.03);ctx.beginPath();for(var i2=0;i2<arcX.length;i2++){var q=P(arcX[i2],arcY(arcX[i2]),zn,camY);if(i2)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1]);}ctx.stroke();
+    /* 벽: 상단 콘크리트(2.45~3.2), 타일 2열(0.7~2.45, 2m 가로), 때 띠(0~0.7) */
+    [-1,1].forEach(function(side){var x=side*HW;
+      poly([P(x,2.45,zn,camY),P(x,WALL,zn,camY),P(x,WALL,zf,camY),P(x,2.45,zf,camY)],gradZ(CEILC,x,2.8,zw,zn,zf,camZ,exitD,0.12));
+      var cols=near?4:1,cw=SEG/cols;
+      for(var c=0;c<cols;c++){var za=Math.max(zn,zw+c*cw-camZ),zb=Math.min(zf,zw+(c+1)*cw-camZ);if(zb<=za)continue;
+        [[1.6,2.45,WALLC],[0.7,1.6,WALLLO]].forEach(function(row,ri){var tv=hash(zw*7+c*13+ri*3+side*101)*0.12-0.06;
+          poly([P(x,row[0],za,camY),P(x,row[1],za,camY),P(x,row[1],zb,camY),P(x,row[0],zb,camY)],gradZ(row[2],x,(row[0]+row[1])/2,zw+c*cw,za,zb,camZ,exitD,tv));});
+        if(near){var a=P(x,0.7,za,camY),b=P(x,2.45,za,camY);ctx.strokeStyle='rgba(20,24,32,'+(0.5*fa)+')';ctx.lineWidth=Math.max(.5,F/za*0.015);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}}
+      poly([P(x,0,zn,camY),P(x,0.7,zn,camY),P(x,0.7,zf,camY),P(x,0,zf,camY)],gradZ(GRIME,x,0.35,zw,zn,zf,camZ,exitD,0));
+      if(near){[0.7,1.6,2.45].forEach(function(yy){var h1=P(x,yy,zn,camY),h2=P(x,yy,zf,camY);ctx.strokeStyle='rgba(20,24,32,'+(0.45*fa)+')';ctx.lineWidth=Math.max(.5,F/zn*0.015);ctx.beginPath();ctx.moveTo(h1[0],h1[1]);ctx.lineTo(h2[0],h2[1]);ctx.stroke();});}
+    });
+    /* 노면: 조명 그라디언트 + 아스팔트 질감(가까운 구간) */
+    var rpts=[P(-HW,0,zn,camY),P(HW,0,zn,camY),P(HW,0,zf,camY),P(-HW,0,zf,camY)];
+    poly(rpts,gradZ(ROADC,0,0,zw,zn,zf,camZ,exitD,zm<30?(30-zm)/30*0.3:0));
+    if(zm<90){ctx.save();ctx.beginPath();ctx.moveTo(rpts[0][0],rpts[0][1]);ctx.lineTo(rpts[1][0],rpts[1][1]);ctx.lineTo(rpts[2][0],rpts[2][1]);ctx.lineTo(rpts[3][0],rpts[3][1]);ctx.closePath();ctx.clip();
+      var nl=rpts[3],nr=rpts[2],fl=rpts[0]; /* 텍스처: 먼 쪽 왼→오 = u, 먼→가까운 = v */
+      ctx.setTransform(DPR*(nr[0]-nl[0])/256,DPR*(nr[1]-nl[1])/256,DPR*(fl[0]-nl[0])/256,DPR*(fl[1]-nl[1])/256,DPR*nl[0],DPR*nl[1]);
+      ctx.globalAlpha=0.16*fa;ctx.globalCompositeOperation='multiply';ctx.drawImage(asph,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.restore();}
+    /* 차선 */
+    var la=0.9*fa;
+    poly([P(-5.5,0.005,zn,camY),P(-5.32,0.005,zn,camY),P(-5.32,0.005,zf,camY),P(-5.5,0.005,zf,camY)],'rgba(240,200,80,'+la+')');
+    poly([P(5.32,0.005,zn,camY),P(5.5,0.005,zn,camY),P(5.5,0.005,zf,camY),P(5.32,0.005,zf,camY)],'rgba(235,240,245,'+la+')');
+    for(var d=Math.floor(zw/9)*9; d<zw+SEG; d+=9){var dn=Math.max(zn,d-camZ),df=Math.min(zf,d+3-camZ);if(df>dn)poly([P(-0.09,0.005,dn,camY),P(0.09,0.005,dn,camY),P(0.09,0.005,df,camY),P(-0.09,0.005,df,camY)],'rgba(235,240,245,'+la+')');}
+    /* 시설물: 비상등(50m, 오른쪽), 비상구 표지(200m, 왼쪽), 제트팬(160m) */
+    for(var E=Math.ceil(zw/50)*50;E<zw+SEG;E+=50){var ez=E-camZ;if(ez>2&&ez<exitD-2){var ep=P(5.9,2.2,ez,camY),ers=Math.max(1.5,F/ez*0.12);var eg=ctx.createRadialGradient(ep[0],ep[1],0,ep[0],ep[1],ers*4);eg.addColorStop(0,'rgba(255,70,60,'+(0.9*fa)+')');eg.addColorStop(1,'rgba(255,70,60,0)');ctx.fillStyle=eg;ctx.beginPath();ctx.arc(ep[0],ep[1],ers*4,0,7);ctx.fill();ctx.fillStyle='rgba(255,120,110,'+fa+')';ctx.beginPath();ctx.arc(ep[0],ep[1],ers,0,7);ctx.fill();}}
+    for(var X=Math.ceil((zw-100)/200)*200+100;X<zw+SEG;X+=200){var xz=X-camZ;if(xz>2&&xz<exitD-2){var p1=P(-5.9,2.0,xz-0.7,camY),p2=P(-5.9,2.0,xz+0.7,camY),p3=P(-5.9,2.6,xz+0.7,camY),p4=P(-5.9,2.6,xz-0.7,camY);poly([p1,p2,p3,p4],'rgba(20,150,80,'+(0.95*fa)+')');var m1=P(-5.9,2.3,xz-0.4,camY),m2=P(-5.9,2.3,xz+0.4,camY);ctx.strokeStyle='rgba(240,255,245,'+fa+')';ctx.lineWidth=Math.max(1,F/xz*0.08);ctx.beginPath();ctx.moveTo(m1[0],m1[1]);ctx.lineTo(m2[0],m2[1]);ctx.stroke();}}
+    for(var J=Math.ceil((zw-80)/160)*160+80;J<zw+SEG;J+=160){var jz=J-camZ;if(jz>4&&jz<exitD-2){[-2.4,2.4].forEach(function(jx){var q=[P(jx-0.55,4.9,jz-1.5,camY),P(jx+0.55,4.9,jz-1.5,camY),P(jx+0.55,4.9,jz+1.5,camY),P(jx-0.55,4.9,jz+1.5,camY)];var jc=shadeAt([120,126,136],J,jz,exitD,0);poly(q,rgb(jc));var q2=[P(jx-0.55,4.35,jz-1.5,camY),P(jx+0.55,4.35,jz-1.5,camY),P(jx+0.55,4.35,jz+1.5,camY),P(jx-0.55,4.35,jz+1.5,camY)];poly([q[0],q[1],q2[1],q2[0]],rgb(mix(jc,[0,0,0],.45)));poly([q[3],q[2],q2[2],q2[3]],rgb(mix(jc,[0,0,0],.6)));});}}
+    /* 조명 2열 + 노면 거울 반사 + 바닥 웅덩이 */
+    for(var L=Math.ceil(zw/LAMP)*LAMP; L<zw+SEG; L+=LAMP){var lz=L-camZ;if(lz<1.5||lz>exitD-2)continue;var nr2=1-fogOf(lz,exitD).amt*0.9;
+      [-2.1,2.1].forEach(function(lx){
+        var r=P(lx,0,lz,camY),m=P(lx,-TOP,lz,camY);var rg=ctx.createLinearGradient(r[0],r[1],m[0],m[1]);rg.addColorStop(0,'rgba(255,225,150,'+(0.62*nr2)+')');rg.addColorStop(1,'rgba(255,225,150,0)');
+        var wq=F/lz*0.35;ctx.fillStyle=rg;ctx.beginPath();ctx.moveTo(r[0]-wq,r[1]);ctx.lineTo(r[0]+wq,r[1]);ctx.lineTo(m[0]+wq*2,m[1]);ctx.lineTo(m[0]-wq*2,m[1]);ctx.closePath();ctx.fill();
+        var pr=F/lz*3.2;var pg=ctx.createRadialGradient(r[0],r[1],0,r[0],r[1],pr);pg.addColorStop(0,'rgba(255,230,160,'+(0.3*nr2)+')');pg.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=pg;ctx.beginPath();ctx.ellipse(r[0],r[1],pr,pr*0.28,0,0,7);ctx.fill();
+        var ly=arcY(lx)-0.18;var q=[P(lx-0.18,ly,lz-0.7,camY),P(lx+0.18,ly,lz-0.7,camY),P(lx+0.18,ly,lz+0.7,camY),P(lx-0.18,ly,lz+0.7,camY)];
+        var c=P(lx,ly,lz,camY),gr=F/lz*3.4;var lg=ctx.createRadialGradient(c[0],c[1],0,c[0],c[1],gr);lg.addColorStop(0,'rgba(255,240,190,'+(0.8*nr2)+')');lg.addColorStop(.3,'rgba(255,220,140,'+(0.3*nr2)+')');lg.addColorStop(1,'rgba(233,196,106,0)');ctx.fillStyle=lg;ctx.beginPath();ctx.arc(c[0],c[1],gr,0,7);ctx.fill();
+        poly(q,'rgba(255,250,230,'+(0.98*nr2+0.02)+')');
+      });}
+  }
+  /* 앞차: 안개 속 120m에서 미등으로 나타남 → 내가 따라붙어 12m까지 → 왼쪽 차로로 비켜 추월당함(뒤로 빠짐). 14초 주기 */
+  (function(){var CYC=14,ph=(t%CYC)/CYC,cz,cx,fade;
+    if(ph<0.62){var u=ph/0.62;cz=120-108*(1-Math.pow(1-u,2.2));cx=CAMX;fade=Math.min(1,u*6);}
+    else if(ph<0.9){var v=(ph-0.62)/0.28;cx=CAMX-3.4*(0.5-0.5*Math.cos(Math.PI*Math.min(1,v*1.4)));cz=12-6*v;fade=Math.max(0,1-Math.pow(v,1.5));}
+    else return;
+    if(cz<1.2)return;
+    var fa=(1-fogOf(cz,exitD).amt*0.85)*fade;if(fa<0.02)return;
+    var lean=(ph>=0.62)?-0.04:0;
+    var b0=P(cx-0.9,0.3,cz,camY),b1=P(cx+0.9,1.45,cz,camY),wv=b1[0]-b0[0],hv=b0[1]-b1[1];
+    ctx.save();ctx.translate((b0[0]+b1[0])/2,b0[1]);ctx.rotate(lean);
+    var body=ctx.createLinearGradient(0,-hv,0,0);body.addColorStop(0,'rgba(36,40,50,'+(0.9*fa)+')');body.addColorStop(.55,'rgba(18,20,28,'+(0.95*fa)+')');body.addColorStop(1,'rgba(6,7,10,'+fa+')');
+    ctx.fillStyle=body;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(-wv/2,-hv,wv,hv,wv*0.1);else ctx.rect(-wv/2,-hv,wv,hv);ctx.fill();
+    /* 뒷유리: 터널 조명이 비침 */
+    ctx.fillStyle='rgba(150,160,175,'+(0.25*fa)+')';ctx.fillRect(-wv*0.36,-hv*0.92,wv*0.72,hv*0.3);
+    /* 번호판 */
+    ctx.fillStyle='rgba(225,228,232,'+(0.8*fa)+')';ctx.fillRect(-wv*0.13,-hv*0.36,wv*0.26,hv*0.11);
+    ctx.restore();
+    /* 노면 그림자 */
+    var sh=P(cx,0,cz,camY);ctx.fillStyle='rgba(0,0,0,'+(0.45*fa)+')';ctx.beginPath();ctx.ellipse(sh[0],sh[1],wv*0.6,wv*0.06,0,0,7);ctx.fill();
+    [-0.72,0.72].forEach(function(dx){var q=P(cx+dx,0.95,cz,camY),r=Math.max(1.2,F/cz*0.07);
+      var g=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],r*8);g.addColorStop(0,'rgba(255,60,50,'+(0.8*fa)+')');g.addColorStop(.25,'rgba(255,40,40,'+(0.25*fa)+')');g.addColorStop(1,'rgba(255,40,40,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(q[0],q[1],r*8,0,7);ctx.fill();
+      ctx.fillStyle='rgba(255,180,170,'+fa+')';ctx.beginPath();ctx.ellipse(q[0],q[1],r*2,r*0.9,0,0,7);ctx.fill();
+      var m=P(cx+dx,0,cz,camY),m2=P(cx+dx,-0.7,cz,camY);var rg=ctx.createLinearGradient(m[0],m[1],m2[0],m2[1]);rg.addColorStop(0,'rgba(255,60,50,'+(0.3*fa)+')');rg.addColorStop(1,'rgba(255,60,50,0)');ctx.fillStyle=rg;ctx.fillRect(m[0]-r*1.5,m[1],r*3,m2[1]-m[1]);});
+    /* 왼쪽 깜빡이: 차로 변경 직전·중 */
+    if(ph>0.55&&ph<0.8&&Math.floor(t*2.6)%2===0){var q=P(cx-0.85,0.95,cz,camY),r=Math.max(1.2,F/cz*0.06);var g=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],r*7);g.addColorStop(0,'rgba(255,170,40,'+(0.95*fa)+')');g.addColorStop(1,'rgba(255,170,40,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(q[0],q[1],r*7,0,7);ctx.fill();}
+  })();
+  /* 출구 빛의 노면 반사(긴 줄기) */
+  var rr=P(0,0,exitD,camY),rn=P(0,0,exitD*0.35,camY);var xg=ctx.createLinearGradient(rr[0],rr[1],rn[0],rn[1]);xg.addColorStop(0,'rgba(255,245,215,.55)');xg.addColorStop(1,'rgba(255,245,215,0)');ctx.fillStyle=xg;ctx.beginPath();ctx.moveTo(rr[0]-er*0.9,rr[1]);ctx.lineTo(rr[0]+er*0.9,rr[1]);ctx.lineTo(rn[0]+er*3,rn[1]);ctx.lineTo(rn[0]-er*3,rn[1]);ctx.closePath();ctx.fill();
+  /* 전조등 */
+  var hl=ctx.createRadialGradient(CX+F*0.02,H*1.05,0,CX,H*0.9,H*0.9);hl.addColorStop(0,'rgba(255,230,170,.14)');hl.addColorStop(.5,'rgba(233,196,106,.05)');hl.addColorStop(1,'rgba(233,196,106,0)');ctx.fillStyle=hl;ctx.fillRect(0,CY,W,H-CY);
+  /* 안개 입자: 운전석 앞 3~28m, 다가오며 흩날림. 빔 원뿔 안에서만 밝다 */
+  (function(){var N=mobile?40:90,ZR=25;for(var i=0;i<N;i++){var a=hash(i*7.13),b=hash(i*3.71),c=hash(i*9.29);
+      var z=3+ZR-(((t*SPEED*0.9)+a*ZR)%ZR);var x=CAMX+(b-0.5)*7+Math.sin(t*0.6+i)*0.35,y=0.3+c*2.4+Math.sin(t*0.9+i*1.7)*0.15;
+      var dx=(x-CAMX)/(0.6+z*0.18),dy=(y-0.7)/(0.5+z*0.1);var inBeam=Math.exp(-(dx*dx+dy*dy));if(inBeam<0.05)continue;
+      var q=P(x,y,z,camY),r=Math.max(0.8,F/z*0.025);var al=0.32*inBeam*Math.min(1,(ZR+3-z)/4)*Math.min(1,(z-3)/3);
+      var g=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],r*3);g.addColorStop(0,'rgba(255,240,205,'+al+')');g.addColorStop(1,'rgba(255,240,205,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(q[0],q[1],r*3,0,7);ctx.fill();}})();
+  /* 블룸: 축소본을 흐려서 더하기 */
+  if('filter' in bctx){bctx.setTransform(1,0,0,1,0,0);bctx.filter='none';bctx.globalCompositeOperation='source-over';bctx.drawImage(cv,0,0,BW,BH);
+    /* 밝은 곳만 남기기: 자기 자신을 두 번 곱해 중간톤을 죽인다 */
+    bctx.globalCompositeOperation='multiply';bctx.drawImage(bloom,0,0);bctx.drawImage(bloom,0,0);bctx.globalCompositeOperation='source-over';
+    ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=0.85;ctx.filter='blur('+Math.round(W/110)+'px)';ctx.drawImage(bloom,0,0,W,H);ctx.restore();ctx.filter='none';}
+  var vg=ctx.createRadialGradient(CX,CY,W*0.25,CX,CY,W*0.8);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.6)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+}
+var running=!reduce,t0=performance.now(),pauseAt=0,mb=document.getElementById('motionBtn');
+function frame(now){if(!running)return;draw((now-t0)/1000);requestAnimationFrame(frame);}
+if(reduce){draw(6);mb.hidden=true;}else requestAnimationFrame(frame);
+mb.addEventListener('click',function(){running=!running;mb.setAttribute('aria-pressed',running?'false':'true');mb.textContent=running?'배경 움직임 끄기':'배경 움직임 켜기';if(running){t0=performance.now()-pauseAt;requestAnimationFrame(frame);}else{pauseAt=performance.now()-t0;}});
+})();
+</script>
 </body>
 </html>
