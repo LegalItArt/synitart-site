@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="SynItArt">
 <meta property="og:url" content="https://synitart.com/">
 <meta property="og:title" content="SynItArt — 불확실성의 시대를 지나는 출구전략">
-<meta property="og:description" content="법률·안전·금융·AI를 잇는 실무형 서비스. 상속·소송·안전·금융·AI, 여섯 개 출구.">
+<meta property="og:description" content="법률·안전·금융·AI를 잇는 실무형 서비스. 상속·소송·안전·금융·AI, 다섯 개 출구.">
 <meta name="author" content="Syn Dae Sik (신대식, 申大湜)">
 <meta name="theme-color" content="#0B1220">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -152,6 +152,14 @@ a.card:hover{transform:translateX(4px);border-color:var(--muted)}
 .people-grid p{margin:0;color:var(--muted)}
 .creds{flex:2 1 560px;margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-content:flex-start;gap:12px}
 .creds li{padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-weight:500}
+.credbox{flex:2 1 560px;display:grid;gap:16px;align-content:start}
+.credbox>.creds{flex:none}
+.morecreds summary{display:inline-flex;align-items:center;min-height:44px;cursor:pointer;font-weight:700;color:var(--text);text-decoration:underline;text-underline-offset:5px}
+.morecreds summary:focus-visible{outline:3px solid var(--lamp);outline-offset:3px}
+.morecreds summary::before{content:"▸";display:inline-block;margin-right:8px}
+.morecreds[open] summary::before{content:"▾"}
+.morecreds .creds{margin-top:12px}
+.credhint{margin-top:12px!important;font-size:16px}
 
 /* 바닥글 */
 footer{margin-top:40px;border-top:1px solid var(--border)}
@@ -230,30 +238,30 @@ footer .fine a{color:var(--text);text-decoration:underline;text-underline-offset
         <p>상속 · 증여 · 재무설계 — 기한 확인, 계산기, 우리 집 준비도 진단.</p>
         <span class="go go-heirwise">HeirWise로 가기 → <small style="font-weight:500;color:var(--muted)">finitart.com</small></span>
       </a></li>
-      <li><a class="card" href="/synberry/?src=home">
-        <div class="top"><span class="no">EXIT 02</span><span class="lamp synberry" aria-hidden="true"></span></div>
-        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#6BD493">Syn</span><span style="color:#FF5C70">Berry</span><span class="tm">™</span></h3><span class="ko">신베리 · 설문 진행 중</span>
-        <p>AI 스마트팜 6차산업 — 수도권 1시간 거리 딸기 생산·유통·체험.</p>
-        <span class="go go-synberry">1분 설문 →</span>
+      <li><a class="card" href="https://synberry.synitart.com/">
+        <div class="top"><span class="no">EXIT 02</span><span class="lamp synberry" aria-hidden="true"></span><span class="status">설문 진행 중</span></div>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#6BD493">Syn</span><span style="color:#FF5C70">Berry</span><span class="tm">™</span></h3><span class="ko">신베리 · AI SmartFarm Factory</span>
+        <p>수도권 1시간 거리 시흥 딸기 — 생산·유통·체험.</p>
+        <span class="go go-synberry">SynBerry로 가기 → <small style="font-weight:500;color:var(--muted)">synberry.synitart.com</small></span>
       </a></li>
-      <li><div class="card is-soon">
+      <li><a class="card" href="https://nounsafe.synitart.com/">
         <div class="top"><span class="no">EXIT 03</span><span class="lamp nousafe" aria-hidden="true"></span><span class="status">준비 중</span></div>
-        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#FF3B30">No</span><span style="color:#FFD700">Unsafe</span><span class="tm">™</span></h3>
-        <p>안전관리 플랫폼 — 사업장 안전관리 의무와 사고 후 대응을 한 화면에.</p>
-        <span class="go">준비 중 · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a></span>
-      </div></li>
-      <li><div class="card is-soon">
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#FF3B30">No</span><span style="color:#FFD700">Unsafe</span><span class="tm">™</span></h3><span class="ko">노언세이프 · 안전관리 플랫폼</span>
+        <p>사고 전엔 의무를, 사고 후엔 기한을 — 한 화면에.</p>
+        <span class="go go-nousafe">NoUnsafe로 가기 → <small style="font-weight:500;color:var(--muted)">nounsafe.synitart.com</small></span>
+      </a></li>
+      <li><a class="card" href="https://seabogo.synitart.com/">
         <div class="top"><span class="no">EXIT 04</span><span class="lamp seabogo" aria-hidden="true"></span><span class="status">준비 중</span></div>
-        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#38BDF8">Sea</span><span style="color:#FF9F43">Bogo</span></h3><span class="ko">씨보고</span>
-        <p>선박·어선 중개 — 어선·선박 매물과 해외 바이어 연결.</p>
-        <span class="go">준비 중 · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a></span>
-      </div></li>
-      <li><div class="card is-soon">
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#38BDF8">Sea</span><span style="color:#FF9F43">Bogo</span></h3><span class="ko">씨보고 · 선박·어선 중개</span>
+        <p>어선·선박 매물과 국내·해외 바이어 연결.</p>
+        <span class="go go-seabogo">SeaBogo로 가기 → <small style="font-weight:500;color:var(--muted)">seabogo.synitart.com</small></span>
+      </a></li>
+      <li><a class="card" href="https://lawsuit.synitart.com/">
         <div class="top"><span class="no">EXIT 05</span><span class="lamp lawsuit" aria-hidden="true"></span><span class="status">준비 중</span></div>
-        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#FFE9B8">Art</span><span class="of">of</span><span style="color:#C9A7FF">Lawsuit</span></h3><span class="ko">소송의기술</span>
-        <p>사건 업무 전 과정 AI — 접수 → 정리 → 작성 → 검증 → 기한. 판단은 전문가에게, 반복은 AI에게.</p>
-        <span class="go">준비 중 · 문의 <a href="mailto:synitart@gmail.com">synitart@gmail.com</a></span>
-      </div></li>
+        <h3 class="wm"><span class="hold">SynItArt ·</span><span style="color:#FFE9B8">Art</span><span class="of">of</span><span style="color:#C9A7FF">Lawsuit</span></h3><span class="ko">소송의기술 · 사건업무 AI 도구</span>
+        <p>접수 → 정리 → 작성 → 검증 → 기한. 판단은 전문가에게, 반복은 AI에게.</p>
+        <span class="go go-lawsuit">Art of Lawsuit로 가기 → <small style="font-weight:500;color:var(--muted)">lawsuit.synitart.com</small></span>
+      </a></li>
     </ul>
   </div>
 </section>
@@ -268,15 +276,24 @@ footer .fine a{color:var(--text);text-decoration:underline;text-underline-offset
         <p>사고를 막는 일부터 남은 재산을 지키는 일까지, 한 사람이 끝까지 봅니다. 어느 출구로 들어와도 같은 사람이 답합니다.</p>
         <p><a href="https://finitart.com/about.html">소개 자세히 보기 →</a></p>
       </div>
-      <ul class="creds" aria-label="보유 자격">
-        <li>산업안전기사 · 소방설비기사(기계·전기) · 소방기술자 중급</li>
-        <li>어선중개업 (2026.5)</li>
-        <li>법학 전공 · 법무법인 실무(회생파산)</li>
-        <li>상속법 전문과정 수료 (2026)</li>
-        <li>부동산 경공매 권리분석</li>
-        <li>MBA 경영·전략</li>
-        <li>AI·데이터 실무교육 3,603시간 (11월 3,951시간)</li>
-      </ul>
+      <div class="credbox">
+        <ul class="creds" aria-label="대표 자격">
+          <li>산업안전기사 · 소방설비기사(기계·전기)</li>
+          <li>상속법 전문과정 수료 (2026)</li>
+          <li>AI·데이터 실무교육 3,603시간 (11월 3,951시간)</li>
+        </ul>
+        <details class="morecreds">
+          <summary>자격 전체 보기</summary>
+          <ul class="creds" aria-label="그 밖의 자격">
+            <li>소방기술자 중급</li>
+            <li>어선중개업 (2026.5)</li>
+            <li>법학 전공 · 법무법인 실무(회생파산)</li>
+            <li>부동산 경공매 권리분석</li>
+            <li>MBA 경영·전략</li>
+          </ul>
+          <p class="credhint">각 출구 사이트에는 그 분야 자격만 표시합니다.</p>
+        </details>
+      </div>
     </div>
   </div>
 </section>
