@@ -92,7 +92,8 @@ textarea{min-height:90px;resize:vertical}
 .choices label{display:flex;align-items:center;gap:8px;border:2px solid var(--line);padding:10px 14px;border-radius:10px;font-weight:500;cursor:pointer}
 .choices input{width:22px;height:22px;accent-color:var(--berry)}
 .price b{font-family:var(--f-mono)}
-.consent{border:2px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;font-size:.95rem}
+.consent{border:2px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;font-size:1rem}
+.pick{font-weight:700;margin:0}
 .consent label{display:flex;gap:10px;align-items:flex-start;font-weight:700}
 .consent input{width:22px;height:22px;flex:none;margin-top:3px;accent-color:var(--berry)}
 .consent dl{display:grid;grid-template-columns:7rem 1fr;gap:4px 12px;margin:0;color:var(--muted)}
@@ -170,7 +171,8 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
       <h2 id="h-signup">딸기 수요 조사 설문</h2>
       <p class="nopay"><b>이 설문은 구매 신청·예약·계약이 아닙니다.</b> SynBerry가 배송 권역·가격·체험 프로그램을 정하기 위해 실시하는 수요 조사이며, 응답해도 어떤 의무도 생기지 않고 결제나 예약금도 받지 않습니다. 응답자 중 원하시는 분은 12월 무료 시식 체험단 선정 대상이 됩니다. 응답은 언제든 삭제를 요청할 수 있습니다.</p>
     </div>
-    <div class="tabs" role="tablist" aria-label="응답 유형">
+    <p class="pick" id="pick-hint">먼저 나에게 맞는 것을 하나 고르세요. 고른 것에 맞는 문항만 아래에 나옵니다.</p>
+    <div class="tabs" role="tablist" aria-label="응답 유형" aria-describedby="pick-hint">
       <button type="button" role="tab" id="t-home" aria-selected="true" data-type="home">가정 배송 수요</button>
       <button type="button" role="tab" id="t-exp" aria-selected="false" data-type="exp">딸기 따기 체험 수요</button>
       <button type="button" role="tab" id="t-org" aria-selected="false" data-type="org">학교·기관 단체 수요</button>
@@ -179,18 +181,14 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
 
     <form id="f" novalidate>
       <fieldset>
-        <div class="grid2">
-          <div class="field"><label for="name">이름 또는 닉네임</label><input id="name" type="text" autocomplete="name" required></div>
-          <div class="field"><label for="phone">휴대폰 번호</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></div>
-        </div>
-
         <div class="field" data-for="home exp org">
           <label for="area">사는 곳(또는 기관 소재지)</label>
+          <span class="hint">시흥에서 차로 걸리는 시간으로 묶었습니다.</span>
           <select id="area">
             <option value="">선택해 주세요</option>
-            <optgroup label="20분권"><option>시흥</option><option>안산</option><option>광명</option></optgroup>
-            <optgroup label="40분권"><option>부천</option><option>안양</option><option>군포</option><option>의왕</option><option>인천</option></optgroup>
-            <optgroup label="60분권"><option>서울 서남권</option><option>수원</option><option>화성</option></optgroup>
+            <optgroup label="시흥에서 20분 안"><option>시흥</option><option>안산</option><option>광명</option></optgroup>
+            <optgroup label="시흥에서 40분 안"><option>부천</option><option>안양</option><option>군포</option><option>의왕</option><option value="인천">인천 (강화·옹진 제외)</option></optgroup>
+            <optgroup label="시흥에서 60분 안"><option value="서울 서남권">서울 구로·금천·영등포·양천·강서·관악·동작</option><option>수원</option><option>화성</option></optgroup>
             <option>그 밖의 지역</option>
           </select>
         </div>
@@ -203,11 +201,12 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
             <label><input type="radio" name="freq" id="fq2" value="2주 1회">2주 1회</label>
             <label><input type="radio" name="freq" id="fq3" value="월 1회">월 1회</label>
             <label><input type="radio" name="freq" id="fq4" value="그때그때">그때그때</label>
+            <label><input type="radio" name="freq" id="fq5" value="원하지 않음">배송은 원하지 않음</label>
           </div>
         </div>
         <div class="field price" data-for="home">
           <span class="legend" id="lg-price">당일 수확 딸기 1kg에 적당하다고 느끼는 가격</span>
-          <span class="hint">가격을 정하기 위한 설문 문항입니다. 판매나 구매를 약속하는 것이 아닙니다.</span>
+          <span class="hint">배송비는 빼고 생각해 주세요. 1kg은 보통 큰 딸기 30~40알입니다. 가격을 정하기 위한 문항이며 판매나 구매 약속이 아닙니다.</span>
           <div class="choices" role="radiogroup" aria-labelledby="lg-price">
             <label><input type="radio" name="price" id="pr1" value="12000"><b>12,000원</b></label>
             <label><input type="radio" name="price" id="pr2" value="18000"><b>18,000원</b></label>
@@ -217,18 +216,19 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
         </div>
         <div class="field" data-for="home">
           <label style="display:flex;gap:10px;align-items:center;font-weight:500"><input type="checkbox" id="taster" style="width:22px;height:22px;accent-color:var(--berry)"> 12월 시식 체험단에 참여하고 싶습니다 (무료, 30가구 선정)</label>
+          <span class="hint">집에서 딸기를 받아 맛보는 체험단입니다. 농장에서 딸기를 따는 체험과는 다릅니다. 선정되면 문자로 연락드립니다.</span>
         </div>
 
         <!-- 체험 -->
         <div class="grid2" data-for="exp">
-          <div class="field"><label for="expn">예상 인원</label><input id="expn" type="number" min="1" max="20" inputmode="numeric" placeholder="예: 4"></div>
-          <div class="field"><label for="expw">선호 요일</label><select id="expw"><option value="">선택</option><option>평일</option><option>토요일</option><option>일요일</option><option>상관없음</option></select></div>
+          <div class="field"><label for="expn">체험에 올 인원 (아이 포함)</label><input id="expn" type="number" min="1" max="20" inputmode="numeric" placeholder="예: 4"></div>
+          <div class="field"><label for="expw">체험 희망 요일</label><select id="expw"><option value="">선택</option><option>평일</option><option>토요일</option><option>일요일</option><option>상관없음</option></select></div>
         </div>
 
         <!-- 기관 -->
         <div class="grid2" data-for="org">
           <div class="field"><label for="orgt">기관 유형</label><select id="orgt"><option value="">선택</option><option>어린이집·유치원</option><option>초·중·고</option><option>특수학교</option><option>복지기관</option><option>기업·단체</option><option>기타</option></select></div>
-          <div class="field"><label for="orgn">예상 인원</label><input id="orgn" type="number" min="1" inputmode="numeric" placeholder="예: 25"></div>
+          <div class="field"><label for="orgn">기관 참가 예상 인원</label><input id="orgn" type="number" min="1" inputmode="numeric" placeholder="예: 25"></div>
         </div>
         <div class="field" data-for="org"><label for="orgi">관심 프로그램</label><select id="orgi"><option value="">선택</option><option>딸기 따기 체험</option><option>스마트팜 교육</option><option>체험 + 교육</option></select></div>
 
@@ -247,6 +247,15 @@ footer{border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-wrap:w
         </div>
 
         <div class="field"><label for="memo">하고 싶은 말 <span class="hint">(선택)</span></label><textarea id="memo"></textarea></div>
+
+        <div class="field">
+          <span class="legend">연락처</span>
+          <span class="hint">휴대폰 번호는 시식 체험단 선정 안내와 응답 삭제 요청 확인에만 씁니다. 광고 문자는 아래 '문자로 소식을 받겠습니다'에 체크한 경우에만 보냅니다.</span>
+        </div>
+        <div class="grid2">
+          <div class="field"><label for="name">이름 또는 닉네임</label><input id="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="phone">휴대폰 번호</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></div>
+        </div>
 
         <div class="consent">
           <label for="agree"><input type="checkbox" id="agree" required> 개인정보 수집·이용에 동의합니다 (필수)</label>
