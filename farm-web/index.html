@@ -446,7 +446,7 @@ function prepCount(){const all=document.querySelectorAll('[data-prep]'),done=[..
 buildPrep();
 /* 방문 통계: 개인을 알아볼 수 있는 값은 보내지 않는다(농장 이름 입력값·IP·쿠키 없음).
    보내는 값: 페이지, 사건 종류, 유입경로(src), 고른 패키지, 제작비 합계. 주소가 비어 있으면 아무것도 보내지 않는다. */
-const STATS_EXEC=""; /* Apps Script 웹 앱 주소 (배포 후 붙여 넣기) */
+const STATS_EXEC="https://script.google.com/macros/s/AKfycbzG8P6OlfoDMjlWuWSE22y4hAiWL9dT5pTRMIYVDBWZGUNj0g3ALJxByZJqe52Jk4SG/exec"; /* Apps Script 웹 앱 (legalitart@gmail.com 소유 시트 "farm-web 방문 통계", 2026.10.31 배포 v1) */
 const SRC=(()=>{try{const v=new URLSearchParams(location.search).get('src')||'direct';return /^[A-Za-z0-9_-]{1,40}$/.test(v)?v:'invalid'}catch(e){return 'direct'}})();
 function track(t,extra){
   if(!STATS_EXEC)return;
