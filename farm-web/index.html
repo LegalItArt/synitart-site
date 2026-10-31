@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>농장 웹사이트 제안·견적 · SynItArt</title>
+<meta name="description" content="농가가 패키지·추가 항목·관리·할인을 눌러서 고르면 웹사이트 제작 견적, 지불 일정, 첫 1년 총비용이 바로 계산됩니다. 수요 설문과 구글 시트 연동, 개인정보 동의, 큰 글씨를 기본으로 넣습니다.">
+<link rel="canonical" href="https://synitart.com/farm-web/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="SynItArt">
+<meta property="og:title" content="농장 웹사이트, 눌러서 견적 보기 · SynItArt">
+<meta property="og:description" content="농가가 패키지·추가 항목·관리·할인을 눌러서 고르면 웹사이트 제작 견적, 지불 일정, 첫 1년 총비용이 바로 계산됩니다. 수요 설문과 구글 시트 연동, 개인정보 동의, 큰 글씨를 기본으로 넣습니다.">
+<meta property="og:url" content="https://synitart.com/farm-web/">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/fonts/synitart-sans.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&display=swap">
+<style>
+/* Layout: 왼쪽 = 탭해서 고르는 4단계(위→아래), 오른쪽 = 장부형 견적서(고정). 폰은 한 줄로 쌓고 하단에 합계 막대. */
+:root{
+  --bg:#F3F5F0; --surface:#FFFFFF; --ink:#14201A; --muted:#435249; --line:#C3CDC5;
+  --field:#1E6B3A; --field-soft:#DCEBE0; --berry:#B5122B; --focus:#0B57D0; --bar-grey:#9AA79E;
+  --display:"SynItArt Sans","Pretendard Variable","Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"SynItArt Sans","Pretendard Variable","Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"SynItArt Sans","Pretendard Variable","Pretendard",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1612; --surface:#18221C; --ink:#EEF3EF; --muted:#B4C2B8; --line:#3A4A40;
+  --field:#6BD493; --field-soft:#1F3327; --berry:#FF8A99; --focus:#8AB4F8; --bar-grey:#5E6C63; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1612; --surface:#18221C; --ink:#EEF3EF; --muted:#B4C2B8; --line:#3A4A40;
+  --field:#6BD493; --field-soft:#1F3327; --berry:#FF8A99; --focus:#8AB4F8; --bar-grey:#5E6C63; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 120px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:36px}
+header{display:grid;gap:10px}
+.kicker{color:var(--muted);font-weight:600;font-size:16px}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(30px,5vw,48px);line-height:1.2;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,30px);margin:0 0 4px;text-wrap:balance}
+.lead{margin:0;max-width:60ch;color:var(--muted)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 410px;gap:28px;align-items:start}
+@media (max-width:920px){.grid{grid-template-columns:minmax(0,1fr)}}
+.steps{display:grid;gap:36px;min-width:0}
+.step{display:grid;gap:12px}
+.step-head{display:flex;gap:12px;align-items:baseline}
+.num{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);font-weight:700;font-size:18px}
+.hint{color:var(--muted);font-size:16px;margin:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tile{font:inherit;color:inherit;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px 16px 16px 52px;cursor:pointer;position:relative;display:grid;gap:4px;min-height:64px;width:100%}
+.tile::before{content:"";position:absolute;left:16px;top:18px;width:24px;height:24px;border-radius:6px;border:2px solid var(--muted);background:var(--surface)}
+.tile.radio::before{border-radius:50%}
+.tile[aria-pressed="true"]{border-color:var(--field);background:var(--field-soft);border-width:3px;padding:15px 15px 15px 51px}
+.tile[aria-pressed="true"]::before{background:var(--field);border-color:var(--field);box-shadow:inset 0 0 0 4px var(--surface)}
+.tile.disabled{opacity:.5}
+.t-name{font-weight:700;font-size:19px;line-height:1.35}
+.t-price{font-family:var(--mono);font-weight:600;font-size:17px;font-variant-numeric:tabular-nums}
+.t-desc{color:var(--muted);font-size:15px;line-height:1.5}
+.t-on{font-size:14px;font-weight:700;color:var(--field)}
+.tile[aria-pressed="false"] .t-on{visibility:hidden}
+.pkg .t-name{font-family:var(--display);font-size:24px}
+.pkg .t-price{font-size:22px}
+.included{background:var(--surface);border:2px dashed var(--line);border-radius:12px;padding:14px 16px;font-size:16px;color:var(--muted)}
+.included b{color:var(--ink)}
+.qtyrow{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qtyrow button{font:inherit;font-size:24px;font-weight:700;width:48px;height:48px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.qtyrow output{font-family:var(--mono);font-size:20px;min-width:2.5ch;text-align:center}
+.qty-wrap{display:grid;gap:4px}
+.notice{min-height:1.2em;font-size:15px;font-weight:600;color:var(--berry);margin:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+/* 견적서 */
+.sheet{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:22px;display:grid;gap:14px;min-width:0}
+@media (max-width:920px){.sheet{position:static}}
+.sheet-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.sheet-top h2{font-size:28px;margin:0}
+.match{font-weight:700;font-size:15px;color:var(--field)}
+.lines{list-style:none;margin:0;padding:10px 0 0;display:grid;gap:6px;border-top:2px solid var(--ink)}
+.lines li{display:flex;justify-content:space-between;gap:12px;font-size:16px}
+.lines li b{font-family:var(--mono);font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+.lines li.minus{color:var(--berry);font-weight:600}
+.row{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.row b{font-family:var(--mono);font-weight:600}
+.sum{display:grid;gap:4px;border-top:2px dashed var(--line);padding-top:10px}
+.total{border-top:3px double var(--ink);padding-top:10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.total span{font-weight:700}
+.total b{font-family:var(--mono);font-size:32px;font-weight:600;font-variant-numeric:tabular-nums}
+.box{background:var(--field-soft);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-weight:700}
+.box b{font-family:var(--mono);font-size:22px}
+.box.plain{background:var(--bg);border:2px solid var(--line)}
+.pay{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pay div{border:1.5px solid var(--line);border-radius:8px;padding:8px;font-size:14px;color:var(--muted)}
+.pay b{display:block;color:var(--ink);font-family:var(--mono);font-size:15px;font-weight:600}
+.cmp{display:grid;gap:8px}
+.cmp h3{font-size:16px;margin:0}
+.cmp-row{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;align-items:center;font-size:14px}
+.cmp-bar{position:relative;height:30px;background:var(--bg);border-radius:6px;overflow:hidden}
+.cmp-fill{position:absolute;inset:0 auto 0 0;background:var(--bar-grey);border-radius:6px}
+.cmp-fill.term{background:var(--field)}
+.cmp-fill.ref{background:var(--field);opacity:.55}
+.cmp-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-weight:600;font-size:14px;color:var(--ink);background:var(--surface);padding:0 6px;border-radius:4px}
+.cmp-row.chosen span:first-child{font-weight:700}
+.cmp-row.chosen span:first-child::after{content:" ← 선택"; color:var(--field)}
+.farm label{font-weight:600;font-size:16px;display:block;margin-bottom:4px}
+.farm input{font:inherit;width:100%;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.copy{font:inherit;font-weight:700;font-size:19px;padding:16px;border-radius:12px;border:0;background:var(--ink);color:var(--bg);cursor:pointer}
+.status{min-height:1.4em;font-size:15px;color:var(--field);font-weight:600}
+.fallback{width:100%;min-height:180px;font-family:var(--mono);font-size:14px;border-radius:8px;padding:10px;background:var(--bg);color:var(--ink);border:2px solid var(--line)}
+.note{font-size:14px;color:var(--muted);margin:0}
+/* 제안 본문 */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.info section{display:grid;gap:10px;align-content:start;min-width:0}
+.pairs{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.pairs li{background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:2px}
+.pairs li span{color:var(--muted);font-size:15px}
+.pairs li strong{font-size:17px}
+ol.flow{margin:0;padding-left:1.4em;display:grid;gap:8px}
+ol.flow b{font-weight:700}
+ul.promise{margin:0;padding-left:1.2em;display:grid;gap:6px}
+.prep{display:grid;gap:14px}
+.prep-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.pg{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.pg h3{margin:0;font-size:19px;display:flex;gap:10px;align-items:center}
+.pg h3 .num{width:30px;height:30px;font-size:16px}
+.pg ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.chk{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;cursor:pointer;padding:6px 4px;border-radius:8px}
+.chk input{width:26px;height:26px;margin:2px 0 0;accent-color:var(--field);cursor:pointer}
+.chk span{font-size:17px;line-height:1.5}
+.chk small{display:block;color:var(--muted);font-size:14px}
+.chk input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px}
+.chk input:checked + span small{text-decoration:none}
+.prep-count{font-weight:700;color:var(--field)}
+.dont{border:3px solid var(--berry);border-radius:12px;padding:16px;background:var(--surface);display:grid;gap:6px}
+.dont h3{margin:0;font-size:19px;color:var(--berry)}
+.dont ul{margin:0;padding-left:1.2em;display:grid;gap:4px}
+footer{border-top:2px solid var(--line);padding-top:16px;display:grid;gap:6px;color:var(--muted);font-size:16px}
+footer strong{color:var(--ink)}
+.bar{display:none}
+@media (max-width:920px){
+  .bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:5;justify-content:space-between;align-items:center;gap:12px;background:var(--ink);color:var(--bg);
+    padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-weight:700}
+  .bar b{font-family:var(--mono);font-size:22px}
+  .bar a{color:var(--bg);font-size:17px;border:2px solid var(--bg);border-radius:8px;padding:6px 12px;text-decoration:none}
+}
+@media (prefers-reduced-motion:no-preference){.tile{transition:background .15s,border-color .15s}.cmp-fill{transition:width .25s}}
+
+.kicker a{color:inherit;text-decoration:none}.kicker a:hover{text-decoration:underline}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker"><a href="/">SynItArt</a> · 농장 웹사이트 제작 제안</div>
+    <h1>눌러서 고르면, 우리 농장 견적이 바로 나옵니다</h1>
+    <p class="lead">손님이 "얼마면 사겠다, 어디로 받고 싶다"고 답한 내용이 농장주님 구글 시트에 바로 쌓이는 웹사이트입니다. 아래에서 원하는 것을 눌러 보세요. 금액은 모두 제안값이며 기준일은 2026.10.31입니다.</p>
+  </header>
+
+  <div class="grid">
+    <div class="steps">
+      <section class="step" aria-labelledby="h-pkg">
+        <div class="step-head"><span class="num" aria-hidden="true">1</span><h2 id="h-pkg">패키지를 고르세요</h2></div>
+        <p class="hint">처음이면 기본형, 체험·배송까지 준비하면 표준형이 맞습니다.</p>
+        <div class="tiles" id="pkgs" role="group" aria-label="패키지"></div>
+      </section>
+
+      <section class="step" aria-labelledby="h-opt">
+        <div class="step-head"><span class="num" aria-hidden="true">2</span><h2 id="h-opt">더하고 싶은 것을 누르세요</h2></div>
+        <div class="included"><b>모든 패키지에 기본 포함:</b> 농장 소개 1페이지, 수요 설문, 응답이 쌓이는 구글 시트, 개인정보 동의서, 큰 글씨·어둡게 보기, 수정 2회, 오픈 뒤 3개월 무료 수리. 기본 제작 기간 2주.</div>
+        <div class="tiles" id="opts" role="group" aria-label="추가 항목"></div>
+      </section>
+
+      <section class="step" aria-labelledby="h-maint">
+        <div class="step-head"><span class="num" aria-hidden="true">3</span><h2 id="h-maint">오픈 뒤 관리를 고르세요</h2></div>
+        <div class="tiles" id="maints" role="radiogroup" aria-label="오픈 뒤 관리"></div>
+      </section>
+
+      <section class="step" aria-labelledby="h-disc">
+        <div class="step-head"><span class="num" aria-hidden="true">4</span><h2 id="h-disc">할인을 고르세요</h2></div>
+        <p class="hint">두 할인은 함께 받을 수 없습니다. 더 유리한 하나를 고르세요.</p>
+        <div class="tiles" id="discs" role="radiogroup" aria-label="할인"></div>
+        <p class="notice" id="notice" role="status"></p>
+      </section>
+    </div>
+
+    <aside class="sheet" id="sheet" aria-labelledby="sheet-title">
+      <div class="sheet-top"><h2 id="sheet-title">견적서</h2><span class="match" id="match"></span></div>
+      <ul class="lines" id="lines"></ul>
+      <div class="sum">
+        <div class="row"><span>공급가액</span><b id="supply">0원</b></div>
+        <div class="row"><span>부가세 10%</span><b id="vat">0원</b></div>
+      </div>
+      <div class="total"><span>제작비 합계</span><b id="total" aria-live="polite">0원</b></div>
+      <div class="box"><span>제작 기간</span><b id="weeks">2주</b></div>
+      <div>
+        <div style="font-weight:700;font-size:16px;margin-bottom:6px">제작비 나눠 내기</div>
+        <div class="pay">
+          <div>계약할 때 30%<b id="pay1">0</b></div>
+          <div>화면 확인 때 40%<b id="pay2">0</b></div>
+          <div>오픈 뒤 30%<b id="pay3">0</b></div>
+        </div>
+      </div>
+      <div class="box plain"><span>관리비(매월, VAT 포함)</span><b id="monthly">0원</b></div>
+      <div class="box"><span>첫 1년 총비용</span><b id="year1" aria-live="polite">0원</b></div>
+      <div class="cmp" aria-label="할인별 첫 1년 총비용 비교">
+        <h3>할인별 첫 1년 총비용 (VAT 포함)</h3>
+        <div id="cmp"></div>
+        <p class="note" id="cmp-note"></p>
+      </div>
+      <div class="farm">
+        <label for="farm">농장 이름(선택)</label>
+        <input id="farm" type="text" placeholder="예: ○○딸기농원" autocomplete="off">
+      </div>
+      <button type="button" class="copy" id="copy">이 견적으로 상담 요청하기(내용 복사)</button>
+      <div class="status" id="status" role="status"></div>
+      <textarea class="fallback" id="fallback" hidden readonly aria-label="복사할 견적 내용"></textarea>
+      <p class="note">복사한 내용을 문자(010-2088-5383)나 이메일(syn@synitart.com)로 보내 주시면 3영업일 안에 확정 견적을 드립니다. 이 화면에서 고른 내용은 밖으로 전송되지 않습니다.</p>
+    </aside>
+  </div>
+
+  <div class="info">
+    <section aria-labelledby="h-why">
+      <h2 id="h-why">이런 농가에 맞습니다</h2>
+      <ul class="pairs">
+        <li><span>지금: 얼마에 팔지 감으로 정한다</span><strong>바뀜: 손님이 고른 적정 가격이 가격대별로 쌓인다</strong></li>
+        <li><span>지금: 어느 동네 손님이 많은지 모른다</span><strong>바뀜: 지역 응답으로 배송 권역을 정한다</strong></li>
+        <li><span>지금: 문의가 문자·SNS·전화로 흩어진다</span><strong>바뀜: 모든 응답이 시트 한 장에 모인다</strong></li>
+        <li><span>지금: 어르신 손님이 글씨를 못 읽는다</span><strong>바뀜: 글자 크게 보기가 기본으로 들어간다</strong></li>
+      </ul>
+      <p class="note">결제·주문 기능은 넣지 않습니다. 사업자 등록 전 농가도 수요 조사로 쓸 수 있습니다.</p>
+    </section>
+    <section aria-labelledby="h-flow">
+      <h2 id="h-flow">진행 순서(기본형 2주)</h2>
+      <ol class="flow">
+        <li><b>상담·계약</b>: 설문으로 알고 싶은 것을 정합니다.</li>
+        <li><b>자료 받기</b>: 아래 "준비하실 것" 목록대로 받습니다.</li>
+        <li><b>화면 확인(1주차 끝)</b>: 완성 화면을 보고 고칠 점을 말씀해 주세요.</li>
+        <li><b>설문·시트 연결(2주차)</b>: 농장주님 구글 계정에 시트를 만들고 시험 응답 20건으로 확인합니다.</li>
+        <li><b>오픈</b>: 주소를 연결하고 공개합니다.</li>
+      </ol>
+    </section>
+    <section aria-labelledby="h-promise">
+      <h2 id="h-promise">약속과 조건</h2>
+      <ul class="promise">
+        <li>손님 응답 시트는 농장주님 계정에 만듭니다. 사이트 권리는 잔금 뒤 넘겨 드립니다.</li>
+        <li>손님 연락처는 동의서의 목적에만 씁니다. SynItArt는 손님에게 연락하지 않습니다.</li>
+        <li>사이트에는 농장 이름만 나오고, 바닥글에 "제작 SynItArt"만 작게 적습니다.</li>
+        <li>12개월 약정을 중간에 끝내면 받은 할인 30만 원을 돌려주셔야 합니다.</li>
+        <li>레퍼런스 할인은 선착순 3곳, 오픈 3개월 뒤 결과를 사례로 공개하는 데 동의할 때 적용됩니다.</li>
+        <li>가격에 없는 것: 도메인·호스팅 실비, 사진 촬영, 문자 발송비.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="prep" aria-labelledby="h-prep">
+    <div>
+      <h2 id="h-prep">준비하실 것</h2>
+      <p class="hint">농장주님이 저희에게 넘겨주실 것을 시점별로 정리했습니다. 준비된 것을 눌러 체크해 두세요. <span class="prep-count" id="prep-count"></span></p>
+    </div>
+    <div class="prep-groups" id="prep-groups"></div>
+    <div class="dont">
+      <h3>이것은 보내지 마세요</h3>
+      <ul>
+        <li><b>비밀번호</b>(구글·도메인·문자 서비스 모두). 권한은 공유 초대로만 주시면 됩니다.</li>
+        <li><b>카드번호, 계좌 비밀번호, 주민등록번호.</b> 결제는 농장주님이 직접 하십니다.</li>
+        <li><b>기존 손님 연락처 명단.</b> 처음 받을 때 동의한 목적이 달라 사이트로 옮기지 않습니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div><strong>SynItArt</strong> · 자격으로 판단하고, AI로 끝까지 챙깁니다.</div>
+    <div>담당 Syn Dae Sik · 딸기재배 기술 과정 수료(2026, 80시간) · AI 스마트팜 팩토리 과정 수료(2026.8, 52시간)</div>
+    <div>전화 010-2088-5383 · 이메일 syn@synitart.com · <a href="https://www.synitart.com" target="_blank" rel="noopener">www.synitart.com</a></div>
+    <div>실제 사례: <a href="https://synberry.synitart.com/" target="_blank" rel="noopener">SynItArt · SynBerry™ 시흥 딸기 스마트팜</a></div>
+    <div>AI·데이터 실무교육 3,603시간</div>
+  </footer>
+</div>
+
+<div class="bar"><span>제작비 <b id="bar-total">0원</b> · <span id="bar-weeks">2주</span></span><a href="#sheet">견적서 보기</a></div>
+
+<script>
+const BASE={name:'기본 구축',price:150,weeks:2};
+const ITEMS=[
+ {id:'pages',name:'추가 페이지',desc:'체험 안내, 농장 이야기 같은 페이지',price:35,weeks:.5,unit:'페이지',max:6},
+ {id:'branch',name:'4갈래 설문',desc:'가정 배송·체험·단체·협력 농가별로 다른 질문',price:60,weeks:.5},
+ {id:'org',name:'기관용 질문 추가',desc:'학교·기관 유형, 인원, 관심 프로그램 (4갈래 설문 필요)',price:20,weeks:0,needs:'branch'},
+ {id:'news',name:'소식 받기 신청',desc:'문자 소식 신청, 광고 수신 동의 분리',price:20,weeks:0},
+ {id:'tool',name:'계산기·점검 도구',desc:'소득 계산기, 준비도 점검 같은 도구',price:60,weeks:.5,unit:'종',max:3},
+ {id:'chart',name:'차트',desc:'같은 값의 표를 함께 보여 주는 차트',price:15,weeks:0,unit:'개',max:5},
+ {id:'map',name:'배송 권역도·체험 안내',desc:'20·40·60분 권역 그림과 체험 소개',price:40,weeks:.5},
+ {id:'brief',name:'정책 브리핑 페이지',desc:'작목·지역 기사 10건 내외를 사실·수치로 정리',price:250,weeks:1},
+ {id:'copy',name:'취재 후 글 새로 쓰기',desc:'농장 방문·인터뷰 뒤 전체 문구 작성',price:150,weeks:.5},
+ {id:'a11y',name:'접근성 점검표',desc:'명암비·키보드·화면낭독 점검 결과 문서',price:40,weeks:0},
+ {id:'rev',name:'수정 횟수 추가',desc:'기본 2회 외 추가 수정',price:30,weeks:0,unit:'회',max:3}
+];
+const PKGS=[
+ {id:'basic',name:'기본형',line:'농장 소개 + 수요 설문 한 페이지',sel:{}},
+ {id:'standard',name:'표준형',line:'4페이지, 4갈래 설문, 계산기, 배송 권역도',sel:{pages:3,branch:1,news:1,tool:1,chart:1,map:1}},
+ {id:'premium',name:'프리미엄',line:'영농조합·기관용, 정책 브리핑과 취재 글',sel:{pages:5,branch:1,org:1,news:1,tool:2,chart:3,map:1,brief:1,copy:1,a11y:1,rev:1}}
+];
+const MAINTS=[
+ {v:0,name:'관리 안 함',desc:'오픈 뒤 3개월 무료 수리만'},
+ {v:15,name:'기본 관리 월 15만 원',desc:'폼·시트 점검, 문구 수정 월 2건'},
+ {v:30,name:'소식 관리 월 30만 원',desc:'기본 관리 + 농장 소식·정책 글 월 2건'}
+];
+const DISCS=[
+ {v:'none',name:'할인 없음',desc:'정가로 계약'},
+ {v:'term',name:'12개월 약정 할인',desc:'관리를 12개월 계약하면 제작비 30만 원 할인'},
+ {v:'ref',name:'레퍼런스 고객 30% 할인',desc:'선착순 3곳, 오픈 3개월 뒤 결과 공개에 동의'}
+];
+const st={q:{},maint:15,disc:'term'};
+ITEMS.forEach(i=>st.q[i.id]=0);
+const won=n=>Math.round(n).toLocaleString('ko-KR')+'원';
+const man=n=>{const v=n/1e4;return Number.isInteger(v)?`${v.toLocaleString('ko-KR')}만 원`:`${Math.floor(v).toLocaleString('ko-KR')}만 ${Math.round((v%1)*10)}천 원`};
+const $=id=>document.getElementById(id);
+
+function pkgSum(p){let s=BASE.price,w=BASE.weeks;ITEMS.forEach(i=>{const q=p.sel[i.id]||0;s+=i.price*q;w+=i.weeks*q});return {s,w:Math.ceil(w)}}
+function build(){
+  $('pkgs').innerHTML=PKGS.map(p=>{const r=pkgSum(p);return `<button type="button" class="tile pkg radio" id="pkg-${p.id}" data-pkg="${p.id}" aria-pressed="false"><span class="t-name">${p.name}</span><span class="t-price">${man(r.s*1e4)} · ${r.w}주</span><span class="t-desc">${p.line} (VAT 별도)</span><span class="t-on">선택됨</span></button>`}).join('');
+  $('opts').innerHTML=ITEMS.map(i=>`<div class="qty-wrap"><button type="button" class="tile" id="opt-${i.id}" data-opt="${i.id}" aria-pressed="false"><span class="t-name">${i.name}</span><span class="t-price">+${man(i.price*1e4)}${i.unit?' / '+i.unit:''}</span><span class="t-desc">${i.desc}${i.weeks?` · 기간 +${i.weeks}주`:''}</span><span class="t-on">추가됨</span></button>${i.unit?`<div class="qtyrow" id="qr-${i.id}" hidden><button type="button" id="minus-${i.id}" aria-label="${i.name} 하나 줄이기">−</button><output id="o-${i.id}" aria-live="polite">1</output><span>${i.unit}</span><button type="button" id="plus-${i.id}" aria-label="${i.name} 하나 늘리기">+</button></div>`:''}</div>`).join('');
+  $('maints').innerHTML=MAINTS.map(m=>`<button type="button" class="tile radio" role="radio" id="mt-${m.v}" data-maint="${m.v}" aria-checked="false" aria-pressed="false"><span class="t-name">${m.name}</span><span class="t-desc">${m.desc}${m.v?` · VAT 포함 ${man(m.v*1e4*1.1)}`:''}</span></button>`).join('');
+  $('discs').innerHTML=DISCS.map(d=>`<button type="button" class="tile radio" role="radio" id="dc-${d.v}" data-disc="${d.v}" aria-checked="false" aria-pressed="false"><span class="t-name">${d.name}</span><span class="t-desc">${d.desc}</span></button>`).join('');
+
+  document.querySelectorAll('[data-pkg]').forEach(b=>b.addEventListener('click',()=>{const p=PKGS.find(x=>x.id===b.dataset.pkg);ITEMS.forEach(i=>st.q[i.id]=p.sel[i.id]||0);say('');render()}));
+  ITEMS.forEach(i=>{
+    $('opt-'+i.id).addEventListener('click',()=>{
+      if(i.needs&&!st.q[i.needs]){say('기관용 질문은 4갈래 설문을 먼저 골라야 합니다.');return}
+      st.q[i.id]=st.q[i.id]?0:1;if(i.id==='branch'&&!st.q.branch)st.q.org=0;say('');render();
+    });
+    if(i.unit){
+      $('minus-'+i.id).addEventListener('click',()=>{st.q[i.id]=Math.max(0,st.q[i.id]-1);render()});
+      $('plus-'+i.id).addEventListener('click',()=>{st.q[i.id]=Math.min(i.max,st.q[i.id]+1);render()});
+    }
+  });
+  document.querySelectorAll('[data-maint]').forEach(b=>b.addEventListener('click',()=>{
+    st.maint=Number(b.dataset.maint);
+    if(st.maint===0&&st.disc==='term'){st.disc='none';say('관리를 빼서 12개월 약정 할인이 풀렸습니다.')}else say('');
+    render();
+  }));
+  document.querySelectorAll('[data-disc]').forEach(b=>b.addEventListener('click',()=>{
+    st.disc=b.dataset.disc;
+    if(st.disc==='term'&&st.maint===0){st.maint=15;say('약정 할인은 관리 계약이 필요해 기본 관리(월 15만 원)를 함께 골랐습니다.')}else say('');
+    render();
+  }));
+}
+function say(t){$('notice').textContent=t}
+
+function calc(disc,maint){
+  let s=BASE.price*1e4,w=BASE.weeks;const lines=[{name:BASE.name,amt:s}];
+  ITEMS.forEach(i=>{const q=st.q[i.id];if(!q)return;s+=i.price*q*1e4;w+=i.weeks*q;lines.push({name:i.name+(i.unit?` ${q}${i.unit}`:''),amt:i.price*q*1e4})});
+  let off=0;
+  if(disc==='term'){off=Math.min(300000,s);lines.push({name:'12개월 약정 할인',amt:-off})}
+  if(disc==='ref'){off=Math.round(s*.3);lines.push({name:'레퍼런스 고객 할인 30%',amt:-off})}
+  const supply=s-off,vat=Math.round(supply*.1),total=supply+vat,monthly=Math.round(maint*1e4*1.1);
+  return {lines,supply,vat,total,weeks:Math.ceil(w),monthly,year1:total+monthly*12};
+}
+function matchPkg(){return PKGS.find(p=>ITEMS.every(i=>(p.sel[i.id]||0)===st.q[i.id]))}
+
+function render(){
+  const m=matchPkg();
+  PKGS.forEach(p=>$('pkg-'+p.id).setAttribute('aria-pressed',String(m===p)));
+  ITEMS.forEach(i=>{
+    const q=st.q[i.id],b=$('opt-'+i.id);
+    b.setAttribute('aria-pressed',String(q>0));
+    if(i.needs)b.classList.toggle('disabled',!st.q[i.needs]);
+    if(i.unit){$('qr-'+i.id).hidden=q===0;$('o-'+i.id).textContent=q}
+  });
+  MAINTS.forEach(x=>{const b=$('mt-'+x.v),on=x.v===st.maint;b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-checked',String(on))});
+  DISCS.forEach(x=>{const b=$('dc-'+x.v),on=x.v===st.disc;b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-checked',String(on))});
+
+  const r=calc(st.disc,st.maint);
+  $('match').textContent=m?`${m.name} 구성`:'직접 고른 구성';
+  $('lines').innerHTML=r.lines.map(l=>`<li class="${l.amt<0?'minus':''}"><span>${l.name}</span><b>${l.amt<0?'−'+won(-l.amt):won(l.amt)}</b></li>`).join('');
+  $('supply').textContent=won(r.supply);$('vat').textContent=won(r.vat);$('total').textContent=won(r.total);
+  $('weeks').textContent=r.weeks+'주';
+  const p1=Math.round(r.total*.3),p2=Math.round(r.total*.4);
+  $('pay1').textContent=won(p1);$('pay2').textContent=won(p2);$('pay3').textContent=won(r.total-p1-p2);
+  $('monthly').textContent=st.maint?won(r.monthly):'없음';
+  $('year1').textContent=won(r.year1);
+  $('bar-total').textContent=won(r.total);$('bar-weeks').textContent=r.weeks+'주';
+
+  const cm=st.maint||15;
+  const sc=[{k:'none',label:'할인 없음',cls:''},{k:'term',label:'12개월 약정',cls:'term'},{k:'ref',label:'레퍼런스',cls:'ref'}].map(x=>({...x,v:calc(x.k,cm).year1}));
+  const mx=Math.max(...sc.map(x=>x.v));
+  $('cmp').innerHTML=sc.map(x=>`<div class="cmp-row${x.k===st.disc?' chosen':''}"><span>${x.label}</span><div class="cmp-bar"><div class="cmp-fill ${x.cls}" style="width:${(x.v/mx*100).toFixed(1)}%"></div><span class="cmp-val">${man(x.v)}</span></div></div>`).join('');
+  $('cmp-note').textContent=`지금 고른 구성 + ${cm===30?'소식 관리 월 30만 원':'기본 관리 월 15만 원'} 12개월 기준입니다.${st.maint?'':' (관리를 고르지 않아 기본 관리로 비교했습니다.)'}`;
+  try{localStorage.setItem('farm-quote',JSON.stringify(st))}catch(e){}
+}
+function summary(){
+  const r=calc(st.disc,st.maint),m=matchPkg(),farm=$('farm').value.trim();
+  const d=DISCS.find(x=>x.v===st.disc).name,mt=MAINTS.find(x=>x.v===st.maint).name;
+  return [
+    `[SynItArt 농장 웹사이트 견적 요청] ${farm?farm+' · ':''}2026.10.31 기준 제안값`,
+    `구성: ${m?m.name:'직접 고른 구성'}`,
+    ...r.lines.map(l=>`- ${l.name}: ${l.amt<0?'−'+won(-l.amt):won(l.amt)}`),
+    `제작비: 공급가액 ${won(r.supply)} + 부가세 ${won(r.vat)} = ${won(r.total)}`,
+    `제작 기간: ${r.weeks}주`,
+    `관리: ${mt}${st.maint?` (VAT 포함 월 ${won(r.monthly)})`:''}`,
+    `할인: ${d}`,
+    `첫 1년 총비용(VAT 포함): ${won(r.year1)}`,
+    '※ 확정 견적이 아닙니다. 상담 뒤 확정 견적서를 드립니다.'
+  ].join('\n');
+}
+$('copy').addEventListener('click',()=>{
+  const text=summary(),s=$('status'),fb=$('fallback');
+  const fallback=()=>{fb.hidden=false;fb.value=text;fb.focus();fb.select();s.textContent='자동 복사가 막혀 있습니다. 아래 칸의 내용을 길게 눌러 복사해 주세요.'};
+  try{navigator.clipboard.writeText(text).then(()=>{fb.hidden=true;s.textContent='견적 내용을 복사했습니다. 문자나 이메일에 붙여 보내 주세요.'}).catch(fallback)}catch(e){fallback()}
+});
+const PREP=[
+ {t:'계약할 때',items:[
+  ['농장 이름, 작목, 위치(시·군까지)','위 견적에서 복사한 내용을 보내 주시면 됩니다'],
+  ['사업자 등록 여부','등록했다면 사업자등록증 사본과 세금계산서 받을 이메일. 등록 전이면 "판매·결제 없는 수요 조사"로 표시합니다']]},
+ {t:'1주차 자료',items:[
+  ['농장·작물 사진 10장 이상(원본 크기)','직접 찍었거나 사용 허락을 받은 사진만. 사람 얼굴이 나오면 본인 동의를 받은 것만'],
+  ['농장 소개 글 A4 반 장','시작한 해, 재배 방식, 자랑거리. 말이나 녹음으로 주셔도 됩니다'],
+  ['농장주 소개','이름 공개 여부, 경력·교육. 공개하지 않을 내용은 표시해 주세요'],
+  ['로고 파일(있으면)','없으면 글자로 대신합니다'],
+  ['판매·체험 계획','품목, 생각하는 가격대, 배송 가능 지역, 체험 가능 요일·인원'],
+  ['설문으로 알고 싶은 것 3가지','예: 적정 가격, 배송 지역, 체험 인원'],
+  ['손님에게 공개할 연락처','개인 휴대폰 공개가 싫으면 별도 번호를 정해 주세요']]},
+ {t:'2주차 계정·설정',items:[
+  ['농장 명의 구글 계정','응답 시트를 이 계정에 만들고, 저희는 공유 초대로만 편집합니다'],
+  ['개인정보 보호책임자 이름·연락처, 응답 보관 기간','개인정보 처리방침에 꼭 들어가는 항목입니다'],
+  ['원하는 사이트 주소 후보 3개','도메인은 농장 명의로 직접 결제해 주세요'],
+  ['문자 발송 서비스 가입·발신번호 등록','소식 받기를 고른 경우만. 농장 명의로 가입, 발송비는 농장 부담']]},
+ {t:'화면 확인과 오픈',items:[
+  ['수정 의견을 한 번에 모아서 전달','기본 수정은 2회입니다. 나눠 보내면 횟수가 빨리 줄어듭니다'],
+  ['시험 응답 입력','시트에 제대로 쌓이는지 직접 확인해 주세요'],
+  ['오픈 승인과 잔금','오픈 뒤 7일 안']]}
+];
+let prepDone={};
+try{prepDone=JSON.parse(localStorage.getItem('farm-prep')||'{}')||{}}catch(e){prepDone={}}
+function buildPrep(){
+  let n=0;
+  $('prep-groups').innerHTML=PREP.map((g,gi)=>`<div class="pg"><h3><span class="num" aria-hidden="true">${gi+1}</span>${g.t}</h3><ul>${g.items.map(([a,b])=>{n++;const id='prep-'+n;return `<li><label class="chk" for="${id}"><input type="checkbox" id="${id}" data-prep="${id}"${prepDone[id]?' checked':''}><span>${a}<small>${b}</small></span></label></li>`}).join('')}</ul></div>`).join('');
+  document.querySelectorAll('[data-prep]').forEach(c=>c.addEventListener('change',()=>{prepDone[c.dataset.prep]=c.checked;try{localStorage.setItem('farm-prep',JSON.stringify(prepDone))}catch(e){}prepCount()}));
+  prepCount();
+}
+function prepCount(){const all=document.querySelectorAll('[data-prep]'),done=[...all].filter(c=>c.checked).length;$('prep-count').textContent=`${done} / ${all.length} 준비됨`}
+buildPrep();
+build();
+let restored=false;
+try{const s=JSON.parse(localStorage.getItem('farm-quote')||'null');if(s&&s.q){ITEMS.forEach(i=>{if(typeof s.q[i.id]==='number')st.q[i.id]=Math.min(i.max||1,Math.max(0,s.q[i.id]))});if([0,15,30].includes(s.maint))st.maint=s.maint;if(['none','term','ref'].includes(s.disc))st.disc=s.disc;restored=true}}catch(e){}
+if(!restored){const p=PKGS.find(x=>x.id==='basic');ITEMS.forEach(i=>st.q[i.id]=p.sel[i.id]||0)}
+render();
+</script>
+</body>
+</html>
